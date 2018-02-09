@@ -9,9 +9,9 @@ public class Dependency {
     public int size;
 
     public List<Dependants> dependants;
-    public List<Conflicts> conflicts;
+    public List<Conflict> conflicts;
 
-    public Dependency(String name, String version, int size, List<Dependants> dependants, List<Conflicts> conflicts) {
+    public Dependency(String name, String version, int size, List<Dependants> dependants, List<Conflict> conflicts) {
         this.name = name;
         this.version = version;
         this.size = size;

@@ -3,20 +3,21 @@ package repository;
 import repository.model.Dependency;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class DependencyRepository {
 
-    private HashMap<String, Dependency> dependencies;
+    private HashMap<String, LinkedList<Dependency>> dependencies;
 
-    public DependencyRepository(HashMap<String, Dependency> dependencies) {
+    public DependencyRepository(HashMap<String, LinkedList<Dependency>> dependencies) {
         this.dependencies = dependencies;
     }
 
-    public HashMap<String, Dependency> getAllDependencies() {
+    public HashMap<String, LinkedList<Dependency>> getAllDependencies() {
         return dependencies;
     }
 
-    public Dependency getDependency(String name) {
-        return dependencies.get(name);
+    public LinkedList<Dependency> getDependency(String name) {
+        return this.dependencies.get(name);
     }
 }

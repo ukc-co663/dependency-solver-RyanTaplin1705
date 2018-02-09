@@ -1,6 +1,7 @@
 all: compile
 
-compile: ./scripts/compile.sh
+compile: mvn install
+    ./scripts/compile.sh
 
 test: compile
 	./scripts/run_tests.sh
