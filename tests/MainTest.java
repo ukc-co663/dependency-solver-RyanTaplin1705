@@ -15,6 +15,9 @@ public class MainTest extends TestCase {
     private State machine = Setup.getMachine(basePath);
     private List<Instruction> instructions = Setup.getInstructions(basePath, machine);
 
+    public MainTest() throws Exception {
+    }
+
     @Test
     public void test() throws Exception {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));

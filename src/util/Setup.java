@@ -17,7 +17,7 @@ import static util.FileReader.readFile;
 
 public class Setup {
 
-    public static State getMachine(String basePath) {
+    public static State getMachine(String basePath) throws Exception {
         return new State(basePath);
     }
 

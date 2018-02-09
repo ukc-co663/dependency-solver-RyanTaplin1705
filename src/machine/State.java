@@ -25,7 +25,7 @@ public class State {
     public List<Instruction> history = new ArrayList<>();
     public HashMap<String, Dependency> dependenciesState;
 
-    public State(String basePath) {
+    public State(String basePath) throws Exception {
         this.workingDir = basePath;
         this.repository = new DependencyRepository(getRepository(basePath + "repository.json"));
         this.dependenciesState = getInitialState(basePath + "initial.json", repository);
