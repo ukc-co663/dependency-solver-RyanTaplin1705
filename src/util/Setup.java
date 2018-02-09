@@ -53,7 +53,7 @@ public class Setup {
         }
     }
 
-    public static HashMap<String, Dependency> getInitialState(String filePath, DependencyRepository dr) throws Exception {
+    public static HashMap<String, Dependency> getInitialState(String filePath, DependencyRepository dr) {
         JSONArray json = new JSONArray(readFile(filePath));
         HashMap<String, Dependency> initial = new HashMap<>(); // needs populating from .json files
         for (int i = 0; i < json.length(); i++) {
@@ -62,16 +62,17 @@ public class Setup {
             if (dependencies.containsKey(packSeg[0])) {
                 Dependency d = getDependencyOfVersion(packSeg[1], dependencies.get(packSeg[0]));
                 initial.put(packSeg[0], new Dependency(packSeg[0], packSeg[1], 0, d.conflicts));
-            } else throw new Exception("Error: No repo entry found for initial state package " + packSeg[0]);
+            } else System.out.println("Error: No repo entry found for initial state package " + packSeg[0]);
         }
         return initial;
     }
 
-    public static Dependency getDependencyOfVersion(String version, LinkedList<Dependency> dependencies) throws Exception {
+    public static Dependency getDependencyOfVersion(String version, LinkedList<Dependency> dependencies) {
         for (int i = 0; i < dependencies.size(); i++) {
             if (dependencies.get(i).version.equals(version)) return dependencies.get(i);
         }
-        throw new Exception(dependencies.get(0).name + " does not have version: " + version);
+        System.out.println(dependencies.get(0).name + " does not have version: " + version);
+        return null;
     }
 
     public static List<Instruction> getInstructions(String basePath, State machine) {
