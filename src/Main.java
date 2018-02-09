@@ -8,9 +8,10 @@ import static util.Setup.getMachine;
 
 public class Main {
 
-
     public static void main(String[] args) throws Exception {
-        start(getMachine(args[0], args[1]), getInstructions(args[2]));
+        String basePath = args[0].substring(0, args[0].lastIndexOf("\\"));
+        State machine = getMachine(basePath);
+        start(machine, getInstructions(basePath, machine));
     }
 
     public static void start(State machine, List<Instruction> instructions) throws Exception {

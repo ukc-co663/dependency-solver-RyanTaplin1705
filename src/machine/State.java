@@ -15,19 +15,21 @@ import java.util.*;
 
 import static repository.model.Operation.*;
 import static util.Setup.getDependencyOfVersion;
+import static util.Setup.getInitialState;
+import static util.Setup.getRepository;
 import static util.VersionChecker.versionGreaterThan;
 
 public class State {
 
+    private final String workingDir;
     public DependencyRepository repository;
-
-    public List<Instruction> history;
-
+    public List<Instruction> history = new ArrayList<>();
     public HashMap<String, Dependency> dependenciesState;
 
-    public State(DependencyRepository repository, HashMap<String, Dependency> dependencies) {
-        this.repository = repository;
-        this.dependenciesState = dependencies;
+    public State(String basePath) {
+        this.workingDir = basePath;
+        this.repository = new DependencyRepository(getRepository(basePath + "repository.json"));
+        this.dependenciesState = getInitialState(basePath + "initial.json", repository);
     }
 
     public void processInstructions(List<Instruction> instructions) throws Exception {
@@ -62,7 +64,18 @@ public class State {
     }
 
     public void writeHistory() throws IOException {
-        FileWriter.create("commands.json").writeJSON(new JSONArray(history));
+        FileWriter.create(workingDir + "commands.json").writeJSON(new JSONArray(stringFormat(history)));
+    }
+
+    private List<String> stringFormat(List<Instruction> history) {
+        List<String> arr = new ArrayList<>();
+        for(Instruction i : history) {
+            String result = "";
+            if (i.getClass() == AddInstruction.class) result += "+";
+            else result += "-";
+            arr.add(result + i.getName() + "=" + i.getVersion());
+        }
+        return arr;
     }
 
     private void incrementallyInstall(AddInstruction instruction) {
