@@ -9,6 +9,7 @@ import static util.Setup.getMachine;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        System.out.println(args[0]);
         String basePath = args[0].substring(0, args[0].lastIndexOf("\\"));
         State machine = getMachine(basePath);
         start(machine, getInstructions(basePath, machine));
