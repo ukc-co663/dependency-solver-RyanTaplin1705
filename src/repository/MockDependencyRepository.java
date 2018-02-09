@@ -6,11 +6,11 @@ import repository.model.Repository;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class DependencyRepository implements Repository {
+public class MockDependencyRepository implements Repository {
 
     private HashMap<String, LinkedList<Dependency>> dependencies;
 
-    public DependencyRepository(HashMap<String, LinkedList<Dependency>> dependencies) {
+    public MockDependencyRepository(HashMap<String, LinkedList<Dependency>> dependencies) {
         this.dependencies = dependencies;
     }
 
