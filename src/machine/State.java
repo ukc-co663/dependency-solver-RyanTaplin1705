@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import repository.DependencyRepository;
 import repository.model.Conflict;
 import repository.model.Dependency;
-import sun.plugin.dom.exception.InvalidStateException;
 import util.FileWriter;
 
 import java.io.IOException;
@@ -121,7 +120,7 @@ public class State {
             if (!versionGreaterThan(conflict.version, instruction.getVersion()))
                 return getUpgradedVersion(conflict);
         }
-        throw new InvalidStateException("Can't find a lower/higher version.");
+        throw new Exception("Can't find a lower/higher version.");
     }
 
     private void installResolvedConflict(String name, String version) throws Exception {

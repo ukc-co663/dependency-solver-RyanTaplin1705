@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import repository.DependencyRepository;
 import repository.model.Conflict;
 import repository.model.Dependency;
-import sun.plugin.dom.exception.InvalidStateException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +53,7 @@ public class Setup {
         }
     }
 
-    public static HashMap<String, Dependency> getInitialState(String filePath, DependencyRepository dr) {
+    public static HashMap<String, Dependency> getInitialState(String filePath, DependencyRepository dr) throws Exception {
         JSONArray json = new JSONArray(readFile(filePath));
         HashMap<String, Dependency> initial = new HashMap<>(); // needs populating from .json files
         for (int i = 0; i < json.length(); i++) {
@@ -63,16 +62,16 @@ public class Setup {
             if (dependencies.containsKey(packSeg[0])) {
                 Dependency d = getDependencyOfVersion(packSeg[1], dependencies.get(packSeg[0]));
                 initial.put(packSeg[0], new Dependency(packSeg[0], packSeg[1], 0, d.conflicts));
-            } else throw new InvalidStateException("Error: No repo entry found for initial state package " + packSeg[0]);
+            } else throw new Exception("Error: No repo entry found for initial state package " + packSeg[0]);
         }
         return initial;
     }
 
-    public static Dependency getDependencyOfVersion(String version, LinkedList<Dependency> dependencies) {
+    public static Dependency getDependencyOfVersion(String version, LinkedList<Dependency> dependencies) throws Exception {
         for (int i = 0; i < dependencies.size(); i++) {
             if (dependencies.get(i).version.equals(version)) return dependencies.get(i);
         }
-        throw new InvalidStateException(dependencies.get(0).name + " does not have version: " + version);
+        throw new Exception(dependencies.get(0).name + " does not have version: " + version);
     }
 
     public static List<Instruction> getInstructions(String basePath, State machine) {
