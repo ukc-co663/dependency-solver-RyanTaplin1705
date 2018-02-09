@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Conflict {
 
-    public String name;
-    public String version;
-    public Operation operation;
+    private String name;
+    private String version;
+    private Operation operation;
 
     public Conflict(String name, String version, Operation operation) {
         this.name = name;
@@ -28,21 +28,15 @@ public class Conflict {
         return bo.contains(true);
     }
 
-    public String resolve() {
-        String[] curV = this.version.split(".");
+    public String getName() {
+        return name;
+    }
 
-        if (this.operation == Operation.LESS_THAN) {
-            curV[curV.length] = (Integer.parseInt(curV[curV.length]) - 1) + "";
-        } else if (this.operation == Operation.GREATER_THAN) { //check if this version exists?
-            curV[curV.length] = (Integer.parseInt(curV[curV.length]) + 1) + "";
-        }
+    public String getVersion() {
+        return version;
+    }
 
-        StringBuilder sb = new StringBuilder();
-        for (String s : curV) {
-            sb.append(s + ",");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-
-        return sb.toString();
+    public Operation getOperation() {
+        return operation;
     }
 }

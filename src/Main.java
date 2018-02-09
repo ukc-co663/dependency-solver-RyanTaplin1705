@@ -14,7 +14,7 @@ public class Main {
         start(machine, getInstructions(basePath, machine));
     }
 
-    public static void start(State machine, List<Instruction> instructions) throws Exception {
+    static void start(State machine, List<Instruction> instructions) throws Exception {
         machine.processInstructions(instructions);
         machine.writeHistory();
     }
