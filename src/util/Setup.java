@@ -21,8 +21,8 @@ import static util.FileReader.readFile;
 
 public class Setup {
 
-    public static State getMachine(String basePath) throws Exception {
-        return new State(basePath);
+    public static State getMachine(String repositoryPath, String initialStatePath, String constraintsPath) throws Exception {
+        return new State(repositoryPath, initialStatePath, constraintsPath);
     }
 
     public static HashMap<String, LinkedList<Dependency>> getRepository(String filePath) {
@@ -79,7 +79,7 @@ public class Setup {
         }
     }
 
-    public static HashMap<String, Dependency> getInitialState(String filePath, DependencyRepository dr) {
+    public static HashMap<String, Dependency> getInitialState(String filePath, DependencyRepository dr) throws Exception {
         JSONArray json = new JSONArray(readFile(filePath));
         HashMap<String, Dependency> initial = new HashMap<>(); // needs populating from .json files
         for (int i = 0; i < json.length(); i++) {
@@ -93,16 +93,15 @@ public class Setup {
         return initial;
     }
 
-    public static Dependency getDependencyOfVersion(String version, LinkedList<Dependency> dependencies) {
+    public static Dependency getDependencyOfVersion(String version, LinkedList<Dependency> dependencies) throws Exception {
         for (int i = 0; i < dependencies.size(); i++) {
             if (dependencies.get(i).version.equals(version)) return dependencies.get(i);
         }
-        System.out.println(dependencies.get(0).name + " does not have version: " + version);
-        return null;
+        throw new Exception(dependencies.get(0).name + " does not have version: " + version);
     }
 
-    public static List<Instruction> getInstructions(String basePath, State machine) throws Exception {
-        JSONArray array = new JSONArray(readFile(basePath + "constraints.json"));
+    public static List<Instruction> getInstructions(String constraintsPath, State machine) throws Exception {
+        JSONArray array = new JSONArray(readFile(constraintsPath));
         List<Instruction> instructions = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             instructions.addAll(Instruction.create(array.getString(i), machine));

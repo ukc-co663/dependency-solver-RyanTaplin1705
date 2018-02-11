@@ -5,6 +5,7 @@ import repository.model.Operation;
 public class VersionChecker {
 
     public static boolean versionEvaluate(String left, String right, Operation operation) {
+        if (left == null || right == null) return false; //TODO not sure if this is right...
         String[] leftS = left.split(".");
         String[] rightS = right.split(".");
 

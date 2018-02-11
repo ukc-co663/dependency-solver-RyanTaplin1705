@@ -8,9 +8,7 @@ import repository.DependencyRepository;
 import repository.model.Conflict;
 import repository.model.Dependants;
 import repository.model.Dependency;
-import util.FileWriter;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,11 +22,11 @@ public class State {
     public List<Instruction> history = new ArrayList<>();
     public HashMap<String, Dependency> dependenciesState;
 
-    public State(String basePath) throws Exception {
-        this.workingDir = basePath;
-        this.repository = new DependencyRepository(getRepository(basePath + "repository.json"));
-        this.constraints = getConstraints(basePath + "constraints.json");
-        this.dependenciesState = getInitialState(basePath + "initial.json", repository);
+    public State(String repositoryPath, String initialStatePath, String constraintsPath) throws Exception {
+        this.workingDir = repositoryPath;
+        this.repository = new DependencyRepository(getRepository(repositoryPath));
+        this.constraints = getConstraints(initialStatePath);
+        this.dependenciesState = getInitialState(constraintsPath, repository);
     }
 
     public void processInstructions(List<Instruction> instructions) throws Exception {
@@ -89,8 +87,8 @@ public class State {
         }
     }
 
-    public void writeHistory() throws IOException {
-        FileWriter.create(workingDir + "commands.json").writeJSON(new JSONArray(stringFormat(history)));
+    public void printHistory() {
+        System.out.println(new JSONArray(stringFormat(history)));
     }
 
     private boolean installed(String name, String version) {
@@ -124,5 +122,4 @@ public class State {
         }
         return arr;
     }
-
 }

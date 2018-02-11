@@ -21,11 +21,11 @@ public interface Instruction {
         String rest = s.substring(1, s.length());
         Operation op = extract(rest);
 
-        String name = rest.substring(0, rest.indexOf(op.getStringValue()));
+        String name = rest.substring(0, op == Operation.NONE ? 1 : rest.indexOf(op.getStringValue()));
 
         String version = op.equals(NONE) ? null :  rest.substring(rest.indexOf(op.getStringValue()), rest.length());
         return getDeps(name, version, op, action, machine).stream()
-                .map(dep -> createInstructionType(action, name, version)).collect(Collectors.toList());
+                .map(dep -> createInstructionType(action, dep.name, dep.version)).collect(Collectors.toList());
 
     }
 
@@ -46,6 +46,9 @@ public interface Instruction {
     }
 
     static Instruction createInstructionType(Action action, String name, String version) {
+        if (version == null) {
+
+        }
         switch(action) {
             case INSTALL:
                 return new AddInstruction(name, version);

@@ -12,8 +12,8 @@ public class MainTest extends TestCase {
 
     private String basePath = System.getProperty("user.dir") + "\\tests\\resources\\basic-0\\";
 
-    private State machine = Setup.getMachine(basePath);
-    private List<Instruction> instructions = Setup.getInstructions(basePath, machine);
+    private State machine = Setup.getMachine(basePath + "repository.json", basePath + "initial.json", basePath + "constraints.json");
+    private List<Instruction> instructions = Setup.getInstructions(basePath + "constraints.json", machine);
 
     public MainTest() throws Exception {
     }
