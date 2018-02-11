@@ -83,12 +83,20 @@ public class Setup {
         JSONArray json = new JSONArray(readFile(filePath));
         HashMap<String, Dependency> initial = new HashMap<>(); // needs populating from .json files
         for (int i = 0; i < json.length(); i++) {
-            String[] packSeg = json.getString(i).split("=");
+            String instr = json.getString(i);
+            String name = instr.substring(0, instr.contains("=") ? instr.indexOf("=") : 2);
+
             HashMap<String, LinkedList<Dependency>> dependencies = dr.getAllDependencies();
-            if (dependencies.containsKey(packSeg[0])) {
-                Dependency d = getDependencyOfVersion(packSeg[1], dependencies.get(packSeg[0]));
-                initial.put(packSeg[0], new Dependency(packSeg[0], packSeg[1], 0, d.confs, d.deps));
-            } else System.out.println("Error: No repo entry found for initial state package " + packSeg[0]);
+            if (dependencies.containsKey(name)) {
+                if (!instr.contains("=")) {
+                    for (Dependency d : dependencies.get(name)) {
+                        initial.put(d.name + "=" + d.version, d);
+                    }
+                } else {
+                    String ver = instr.substring(instr.indexOf("=") + 1, instr.length());
+                    initial.put(name + "=" + ver, getDependencyOfVersion(ver, dependencies.get(name)));
+                }
+            } else throw new Exception("Can't find dependency " + name + " in the machine repository.");
         }
         return initial;
     }

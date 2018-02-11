@@ -14,7 +14,7 @@ public class JSONConverter {
         List<Conflict> conf = new ArrayList<>();
         for (int j = 0; j < arrConf.length(); j++) {
             String s = arrConf.getString(j);
-            if (s.contains(">=")) {
+            if (s.contains(">=")) { //todo check this. not remove all of the operator in some cases
                 String[] p = s.split(">=");
                 conf.add(new Conflict(p[0], p[1], Operation.GREATER_THAN_OR_EQUAL_TO));
             } else if (s.contains("<=")) {

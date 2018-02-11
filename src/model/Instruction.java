@@ -7,8 +7,7 @@ import repository.model.Operation;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static repository.model.Operation.NONE;
-import static repository.model.Operation.extract;
+import static repository.model.Operation.*;
 import static util.VersionChecker.versionEvaluate;
 
 public interface Instruction {
@@ -21,9 +20,9 @@ public interface Instruction {
         String rest = s.substring(1, s.length());
         Operation op = extract(rest);
 
-        String name = rest.substring(0, op == Operation.NONE ? 1 : rest.indexOf(op.getStringValue()));
+        String name = rest.substring(0, op == Operation.NONE ? rest.length() : rest.indexOf(op.getStringValue()));
 
-        String version = op.equals(NONE) ? null :  rest.substring(rest.indexOf(op.getStringValue()), rest.length());
+        String version = op.equals(NONE) ? null :  rest.substring(op == GREATER_THAN_OR_EQUAL_TO || op == LESS_THAN_OR_EQUAL_TO ? 0 : 1 + rest.indexOf(op.getStringValue()), rest.length());
         return getDeps(name, version, op, action, machine).stream()
                 .map(dep -> createInstructionType(action, dep.name, dep.version)).collect(Collectors.toList());
 
@@ -46,9 +45,6 @@ public interface Instruction {
     }
 
     static Instruction createInstructionType(Action action, String name, String version) {
-        if (version == null) {
-
-        }
         switch(action) {
             case INSTALL:
                 return new AddInstruction(name, version);

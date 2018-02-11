@@ -6,8 +6,8 @@ public class VersionChecker {
 
     public static boolean versionEvaluate(String left, String right, Operation operation) {
         if (left == null || right == null) return false; //TODO not sure if this is right...
-        String[] leftS = left.split(".");
-        String[] rightS = right.split(".");
+        String[] leftS = getVersionAsList(left);
+        String[] rightS = getVersionAsList(right);
 
         int itLength = Math.min(leftS.length, rightS.length);
         for (int i = 0; i < itLength; i++) {
@@ -15,4 +15,13 @@ public class VersionChecker {
         }
         return false;
     }
+
+    private static String[] getVersionAsList(String l) {
+        if (!l.contains(".")) {
+          String[] s = new String[1];
+            s[0] = l;
+            return s;
+        } else return l.split(".");
+    }
+
 }

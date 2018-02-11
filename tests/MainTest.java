@@ -38,5 +38,4 @@ public class MainTest extends TestCase {
         }
         return result + instruction.getName() + "=" + instruction.getVersion();
     }
-
 }

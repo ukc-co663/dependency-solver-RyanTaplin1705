@@ -4,7 +4,7 @@ public enum Operation {
 
     GREATER_THAN(">"), GREATER_THAN_OR_EQUAL_TO(">="),
     LESS_THAN("<"),  LESS_THAN_OR_EQUAL_TO("<="),
-    EQUAL_TO("<"), NONE("");
+    EQUAL_TO("="), NONE("");
 
     private String stringValue;
 

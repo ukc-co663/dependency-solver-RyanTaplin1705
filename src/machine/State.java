@@ -16,17 +16,15 @@ import static util.Setup.*;
 
 public class State {
 
-    private final String workingDir;
     private final HashMap<String, LinkedList<Conflict>> constraints;
     public DependencyRepository repository;
     public List<Instruction> history = new ArrayList<>();
     public HashMap<String, Dependency> dependenciesState;
 
     public State(String repositoryPath, String initialStatePath, String constraintsPath) throws Exception {
-        this.workingDir = repositoryPath;
         this.repository = new DependencyRepository(getRepository(repositoryPath));
-        this.constraints = getConstraints(initialStatePath);
-        this.dependenciesState = getInitialState(constraintsPath, repository);
+        this.constraints = getConstraints(constraintsPath);
+        this.dependenciesState = getInitialState(initialStatePath, repository);
     }
 
     public void processInstructions(List<Instruction> instructions) throws Exception {
@@ -37,16 +35,14 @@ public class State {
 
     public void install(AddInstruction instruction) throws Exception {
         Dependency dependency = getDependencyOfVersion(instruction.getVersion(), repository.getDependency(instruction.getName()));
-        if (dependency != null && !installed(dependency.name, dependency.version) && canBeInstalled(dependency.name, dependency.version)) {
-            history.add(instruction);
-            incInstallDeps(dependency.deps);
+        if (dependency != null) {
+            if (!installed(dependency.name, dependency.version)) {
+                history.add(instruction);
+                incInstallDeps(dependency.deps);
+            } // don't reinstall anything already installed.
         } else {
             throw new Exception("Invalid state. Either " + instruction.getName() + " does not exist in the repository or it is already installed.");
         }
-    }
-
-    private boolean canBeInstalled(String name, String version) {
-        return !dependenciesState.containsKey(name + "=" + version);
     }
 
     private void incInstallDeps(List<Dependants> deps) throws Exception {
@@ -66,9 +62,7 @@ public class State {
         if (dependency != null && installed(dependency.name, dependency.version) && notConstraint(dependency.name, dependency.version)) {
             history.add(instruction);
             incUninstallRedundantDeps(dependency.deps);
-        } else {
-            throw new Exception("Invalid state. " + instruction.getName() + " is not installed.");
-        }
+        } else  throw new Exception("Invalid state. " + instruction.getName() + " is not installed.");
     }
 
     private boolean notConstraint(String name, String version) {
