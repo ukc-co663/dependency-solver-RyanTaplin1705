@@ -1,23 +1,29 @@
 package util;
 
-import machine.State;
-import model.Instruction;
+import model.State;
+import model.exceptions.InvalidParsingException;
+import model.instructions.Instruction;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import repository.DependencyRepository;
 import repository.model.Conflict;
 import repository.model.Dependants;
 import repository.model.Dependency;
-import repository.model.Operation;
+import model.Operation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import static repository.model.Operation.NONE;
-import static repository.model.Operation.extract;
+import static model.Operation.NONE;
+import static model.Operation.extractOperator;
 import static util.FileReader.readFile;
+import static util.JSONConverter.getJSONArray;
+import static util.JSONConverter.parseConflicts;
+import static util.JSONConverter.parseDependants;
+import static util.StringParser.extractNameFromString;
+import static util.StringParser.extractVersionFromString;
 
 public class Setup {
 
@@ -26,57 +32,39 @@ public class Setup {
     }
 
     public static HashMap<String, LinkedList<Dependency>> getRepository(String filePath) {
-        JSONArray repo = new JSONArray(readFile(filePath));
+        JSONArray json = new JSONArray(readFile(filePath));
 
         HashMap<String, LinkedList<Dependency>> deps = new HashMap<>();
-        for (int i = 0; i < repo.length(); i ++) {
-            JSONObject object = repo.getJSONObject(i);
-            List<Conflict> conf = JSONConverter.parseConflicts(getJsonArray(object, "confs"));
-            List<Dependants> dependants = JSONConverter.parseDependants(getJsonArray(object, "depends"));
+        for (int i = 0; i < json.length(); i ++) {
+            JSONObject object = json.getJSONObject(i);
+
+            int size = object.getInt("size");
             String name = object.getString("name");
             String version = object.getString("version");
-            int size = object.getInt("size");
-            if (deps.containsKey(name)) {
-                LinkedList<Dependency> dependencies = deps.get(name);
-                dependencies.add(new Dependency(name, version, size, conf, dependants));
-                deps.put(name, dependencies);
-            } else {
-                LinkedList<Dependency> dependencies = new LinkedList<>();
-                dependencies.add(new Dependency(name, version, size, conf, dependants));
-                deps.put(name, dependencies);
-            }
+            List<Conflict> conf = parseConflicts(getJSONArray(object, "confs"));
+            List<Dependants> dependants = parseDependants(getJSONArray(object, "depends"));
+
+            LinkedList<Dependency> tArr = deps.getOrDefault(name, new LinkedList());
+            deps.put(name, genericArrayAdd(tArr, new Dependency(name, version, size, conf, dependants)));
         }
         return deps;
     }
 
-    public static HashMap<String, LinkedList<Conflict>> getConstraints(String filePath) {
+    public static HashMap<String, LinkedList<Conflict>> getConstraints(String filePath) throws InvalidParsingException {
         JSONArray arr = new JSONArray(readFile(filePath));
 
         HashMap<String, LinkedList<Conflict>> deps = new HashMap<>();
         for (int i = 0; i < arr.length(); i ++) {
-            String s = arr.getString(i).substring(1, arr.getString(i).length());
-            Operation op = extract(s);
-            String name = s.substring(0, s.indexOf(op.getStringValue()));
-            String version = op.equals(NONE) ? null :  s.substring(s.indexOf(op.getStringValue()), s.length());
-            if (deps.containsKey(name)) {
-                LinkedList<Conflict> conf = deps.get(name);
-                conf.add(new Conflict(name, version, op));
-                deps.put(name, conf);
-            } else {
-                LinkedList<Conflict> conf = new LinkedList<>();
-                conf.add(new Conflict(name, version, op));
-                deps.put(name, conf);
-            }
+
+            String raw = arr.getString(i).substring(1, arr.getString(i).length());
+            Operation op = extractOperator(raw);
+            String name = raw.substring(0, raw.indexOf(op.getStringValue()));
+            String version = op.equals(NONE) ? null :  raw.substring(raw.indexOf(op.getStringValue()), raw.length());
+
+            LinkedList<Conflict> tArr = deps.getOrDefault(name, new LinkedList());
+            deps.put(name, genericArrayAdd(tArr, new Conflict(name, version, op)));
         }
         return deps;
-    }
-
-    private static JSONArray getJsonArray(JSONObject object, String conflicts) {
-        try {
-            return object.getJSONArray(conflicts);
-        } catch (Exception e) {
-            return new JSONArray();
-        }
     }
 
     public static HashMap<String, Dependency> getInitialState(String filePath, DependencyRepository dr) throws Exception {
@@ -84,17 +72,17 @@ public class Setup {
         HashMap<String, Dependency> initial = new HashMap<>(); // needs populating from .json files
         for (int i = 0; i < json.length(); i++) {
             String instr = json.getString(i);
-            String name = instr.substring(0, instr.contains("=") ? instr.indexOf("=") : 2);
+            String name = extractNameFromString(instr);
 
             HashMap<String, LinkedList<Dependency>> dependencies = dr.getAllDependencies();
             if (dependencies.containsKey(name)) {
                 if (!instr.contains("=")) {
                     for (Dependency d : dependencies.get(name)) {
-                        initial.put(d.name + "=" + d.version, d);
+                        initial.put(d.getKey(), d);
                     }
                 } else {
-                    String ver = instr.substring(instr.indexOf("=") + 1, instr.length());
-                    initial.put(name + "=" + ver, getDependencyOfVersion(ver, dependencies.get(name)));
+                    Dependency d = getDependencyOfVersion(extractVersionFromString(instr), dependencies.get(name));
+                    initial.put(d.getKey(), d);
                 }
             } else throw new Exception("Can't find dependency " + name + " in the machine repository.");
         }
@@ -109,11 +97,16 @@ public class Setup {
     }
 
     public static List<Instruction> getInstructions(String constraintsPath, State machine) throws Exception {
-        JSONArray array = new JSONArray(readFile(constraintsPath));
+        JSONArray json = new JSONArray(readFile(constraintsPath));
         List<Instruction> instructions = new ArrayList<>();
-        for (int i = 0; i < array.length(); i++) {
-            instructions.addAll(Instruction.create(array.getString(i), machine));
+        for (int i = 0; i < json.length(); i++) {
+            instructions.addAll(Instruction.create(json.getString(i), machine));
         }
         return instructions;
+    }
+
+    private static <T> LinkedList<T> genericArrayAdd(LinkedList<T> list, T result) {
+        list.add(result);
+        return list;
     }
 }

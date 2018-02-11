@@ -1,5 +1,7 @@
 package repository.model;
 
+import model.Operation;
+
 import java.util.ArrayList;
 import java.util.List;
 

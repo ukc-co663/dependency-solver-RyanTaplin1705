@@ -34,4 +34,8 @@ public class Dependency {
             else return null;
         }).collect(Collectors.toList());
     }
+
+    public String getKey() {
+        return this.name + "=" + this.version;
+    }
 }

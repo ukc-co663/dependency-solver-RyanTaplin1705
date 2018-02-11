@@ -1,7 +1,6 @@
 package repository;
 
 import repository.model.Dependency;
-import repository.model.Repository;
 
 import java.util.HashMap;
 import java.util.LinkedList;

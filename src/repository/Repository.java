@@ -1,4 +1,4 @@
-package repository.model;
+package repository;
 
 public interface Repository {
 }

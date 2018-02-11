@@ -1,4 +1,6 @@
-package repository.model;
+package model;
+
+import model.exceptions.InvalidParsingException;
 
 public enum Operation {
 
@@ -8,8 +10,8 @@ public enum Operation {
 
     private String stringValue;
 
-    Operation(String s) {
-        stringValue = s;
+    Operation(String value) {
+        stringValue = value;
     }
 
     public boolean evaluate(int valOne, int valTwo) {
@@ -29,24 +31,14 @@ public enum Operation {
         }
     }
 
-    public static Operation extract(String s) {
-        //Operation.valueOf(s);
-        if (s.contains(">=")) {
-            return GREATER_THAN_OR_EQUAL_TO;
-        } else if (s.contains("<=")) {
-            return LESS_THAN_OR_EQUAL_TO;
-        } else if (s.contains("<")) {
-            return Operation.LESS_THAN;
-        } else if (s.contains(">")) {
-            return Operation.GREATER_THAN;
-        } else if (s.contains("=")) {
-            return Operation.EQUAL_TO;
-        } else {
-            return Operation.NONE;
-        }
-    }
-
     public String getStringValue() {
         return stringValue;
+    }
+
+    public static Operation extractOperator(String s) throws InvalidParsingException {
+        for(Operation o : Operation.values()) {
+            if (s.contains(o.getStringValue())) return o;
+        }
+        throw new InvalidParsingException("Invalid operator {" + s + "} is being processed.");
     }
 }

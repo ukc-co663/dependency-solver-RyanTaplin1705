@@ -1,27 +1,28 @@
-package model;
+package model.instructions;
 
-import machine.State;
+import model.State;
 
-public class RemoveInstruction implements Instruction {
+public class AddInstruction implements Instruction {
 
     private String name;
     private String version;
 
-    public RemoveInstruction(String name, String version) {
+    public AddInstruction(String name, String version) {
         this.name = name;
         this.version = version;
+    }
+
+    @Override
+    public void run(State state) throws Exception {
+        state.install(this);
     }
 
     public String getName() {
         return name;
     }
 
-    @Override
-    public void run(State state) throws Exception {
-        state.uninstall(this);
-    }
-
     public String getVersion() {
         return version;
     }
+
 }

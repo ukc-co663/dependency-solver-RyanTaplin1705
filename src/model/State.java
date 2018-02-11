@@ -1,8 +1,9 @@
-package machine;
+package model;
 
-import model.AddInstruction;
-import model.Instruction;
-import model.RemoveInstruction;
+import model.instructions.AddInstruction;
+import model.instructions.Instruction;
+import model.instructions.RemoveInstruction;
+import model.exceptions.InvalidStateException;
 import org.json.JSONArray;
 import repository.DependencyRepository;
 import repository.model.Conflict;
@@ -12,6 +13,8 @@ import repository.model.Dependency;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static model.exceptions.InvalidStateException.REASON_CONFLICT;
+import static util.Printer.stringFormat;
 import static util.Setup.*;
 
 public class State {
@@ -25,6 +28,10 @@ public class State {
         this.repository = new DependencyRepository(getRepository(repositoryPath));
         this.constraints = getConstraints(constraintsPath);
         this.dependenciesState = getInitialState(initialStatePath, repository);
+    }
+
+    public void printHistory() {
+        System.out.println(new JSONArray(stringFormat(history)));
     }
 
     public void processInstructions(List<Instruction> instructions) throws Exception {
@@ -41,19 +48,7 @@ public class State {
                 incInstallDeps(dependency.deps);
             } // don't reinstall anything already installed.
         } else {
-            throw new Exception("Invalid state. Either " + instruction.getName() + " does not exist in the repository or it is already installed.");
-        }
-    }
-
-    private void incInstallDeps(List<Dependants> deps) throws Exception {
-        for (int i = 0; i < deps.size(); i++) {
-            Dependants dep = deps.get(i);
-            if (!installed(dep.getName(), dep.getVersion()) && dependenciesState.containsKey(dep.getName() + "=" + dep.getVersion())) {
-                List<Dependency> collect = dependenciesState.values().stream()
-                        .filter(d -> d.conflictsWith(dep.getName(), dep.getVersion()).size() > 0).collect(Collectors.toList());
-                if (collect.size() > 0) invalidStateException();
-                else install(new AddInstruction(dep.getName(), dep.getVersion()));
-            }
+            throw new InvalidStateException("Invalid state. Either " + instruction.getName() + " does not exist in the repository.");
         }
     }
 
@@ -62,31 +57,7 @@ public class State {
         if (dependency != null && installed(dependency.name, dependency.version) && notConstraint(dependency.name, dependency.version)) {
             history.add(instruction);
             incUninstallRedundantDeps(dependency.deps);
-        } else  throw new Exception("Invalid state. " + instruction.getName() + " is not installed.");
-    }
-
-    private boolean notConstraint(String name, String version) {
-        return constraints.get(name).stream().filter(c -> c.getVersion() == version).collect(Collectors.toList()).size() <= 0;
-    }
-
-    private void incUninstallRedundantDeps(List<Dependants> deps) throws Exception {
-        for (int i = 0; i < deps.size(); i++) {
-            Dependants dep = deps.get(i);
-            if (installed(dep.getName(), dep.getVersion())) {
-                List<Dependency> collect = dependenciesState.values().stream()
-                        .filter(d -> d.requiredWith(dep.getName(), dep.getVersion()).size() > 0).collect(Collectors.toList());
-                if (collect.size() > 0) invalidStateException();
-                else uninstall(new RemoveInstruction(dep.getName(), dep.getVersion()));
-            }
-        }
-    }
-
-    public void printHistory() {
-        System.out.println(new JSONArray(stringFormat(history)));
-    }
-
-    private boolean installed(String name, String version) {
-        return dependenciesState.containsKey(name + "=" + version);
+        } else  throw new InvalidStateException("Invalid state. " + instruction.getName() + " is not installed.");
     }
 
     private void processInstruction(Instruction instruction) throws Exception {
@@ -96,24 +67,41 @@ public class State {
             Collection<Dependency> curInstalls = dependenciesState.values();
             for(Dependency dependency : curInstalls) {
                 List<Conflict> conflicts = dependency.conflictsWith(instruction.getName(), instruction.getVersion());
-                if (conflicts.size() > 0) invalidStateException();
+                if (conflicts.size() > 0) throw new InvalidStateException(REASON_CONFLICT);
             }
             instruction.run(this);
         }
     }
 
-    private void invalidStateException() throws Exception {
-        throw new Exception("Can't reach intermediate state without conflict.");
+    private void incInstallDeps(List<Dependants> deps) throws Exception {
+        for (int i = 0; i < deps.size(); i++) {
+            Dependants dep = deps.get(i);
+            if (!installed(dep.getName(), dep.getVersion()) && dependenciesState.containsKey(dep.getName() + "=" + dep.getVersion())) {
+                List<Dependency> collect = dependenciesState.values().stream()
+                        .filter(d -> d.conflictsWith(dep.getName(), dep.getVersion()).size() > 0).collect(Collectors.toList());
+                if (collect.size() > 0) throw new InvalidStateException(REASON_CONFLICT);
+                else install(new AddInstruction(dep.getName(), dep.getVersion()));
+            }
+        }
     }
 
-    private List<String> stringFormat(List<Instruction> history) {
-        List<String> arr = new ArrayList<>();
-        for(Instruction i : history) {
-            String result = "";
-            if (i.getClass() == AddInstruction.class) result += "+";
-            else result += "-";
-            arr.add(result + i.getName() + "=" + i.getVersion());
+    private void incUninstallRedundantDeps(List<Dependants> deps) throws Exception {
+        for (int i = 0; i < deps.size(); i++) {
+            Dependants dep = deps.get(i);
+            if (installed(dep.getName(), dep.getVersion())) {
+                List<Dependency> collect = dependenciesState.values().stream()
+                        .filter(d -> d.requiredWith(dep.getName(), dep.getVersion()).size() > 0).collect(Collectors.toList());
+                if (collect.size() > 0) throw new InvalidStateException(REASON_CONFLICT);
+                else uninstall(new RemoveInstruction(dep.getName(), dep.getVersion()));
+            }
         }
-        return arr;
+    }
+
+    private boolean notConstraint(String name, String version) {
+        return constraints.get(name).stream().filter(c -> c.getVersion() == version).collect(Collectors.toList()).size() <= 0;
+    }
+
+    private boolean installed(String name, String version) {
+        return dependenciesState.containsKey(name + "=" + version);
     }
 }

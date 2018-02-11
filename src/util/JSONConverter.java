@@ -1,14 +1,23 @@
 package util;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import repository.model.Conflict;
 import repository.model.Dependants;
-import repository.model.Operation;
+import model.Operation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class JSONConverter {
+
+    public static JSONArray getJSONArray(JSONObject object, String conflicts) {
+        try {
+            return object.getJSONArray(conflicts);
+        } catch (Exception e) {
+            return new JSONArray();
+        }
+    }
 
     public static List<Conflict> parseConflicts(JSONArray arrConf) {
         List<Conflict> conf = new ArrayList<>();

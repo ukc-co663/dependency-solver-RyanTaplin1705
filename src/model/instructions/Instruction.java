@@ -1,13 +1,14 @@
-package model;
+package model.instructions;
 
-import machine.State;
+import model.Action;
+import model.Operation;
+import model.State;
 import repository.model.Dependency;
-import repository.model.Operation;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static repository.model.Operation.*;
+import static model.Operation.*;
 import static util.VersionChecker.versionEvaluate;
 
 public interface Instruction {
@@ -18,7 +19,7 @@ public interface Instruction {
     static List<Instruction> create(String s, State machine) throws Exception {
         Action action = Action.convert(s.charAt(0));
         String rest = s.substring(1, s.length());
-        Operation op = extract(rest);
+        Operation op = extractOperator(rest);
 
         String name = rest.substring(0, op == Operation.NONE ? rest.length() : rest.indexOf(op.getStringValue()));
 
@@ -51,7 +52,7 @@ public interface Instruction {
             case UNINSTALL:
                 return new RemoveInstruction(name, version);
             default:
-                return new InvalidInstruction(action.toString() + name + "?" + version);
+                return null; //risky, should throw InvalidParsingException but map doesn't handle it.
         }
     }
 

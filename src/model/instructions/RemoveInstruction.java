@@ -1,13 +1,13 @@
-package model;
+package model.instructions;
 
-import machine.State;
+import model.State;
 
-public class AddInstruction implements Instruction {
+public class RemoveInstruction implements Instruction {
 
     private String name;
     private String version;
 
-    public AddInstruction(String name, String version) {
+    public RemoveInstruction(String name, String version) {
         this.name = name;
         this.version = version;
     }
@@ -18,11 +18,10 @@ public class AddInstruction implements Instruction {
 
     @Override
     public void run(State state) throws Exception {
-        state.install(this);
+        state.uninstall(this);
     }
 
     public String getVersion() {
         return version;
     }
-
 }

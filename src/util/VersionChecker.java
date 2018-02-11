@@ -1,6 +1,6 @@
 package util;
 
-import repository.model.Operation;
+import model.Operation;
 
 public class VersionChecker {
 

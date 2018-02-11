@@ -1,5 +1,5 @@
-import machine.State;
-import model.Instruction;
+import model.State;
+import model.instructions.Instruction;
 
 import java.util.List;
 
