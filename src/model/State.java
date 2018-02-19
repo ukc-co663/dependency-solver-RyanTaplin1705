@@ -74,15 +74,28 @@ public class State {
     }
 
     private void incInstallDeps(List<Dependants> deps) throws Exception {
-        for (int i = 0; i < deps.size(); i++) {
-            Dependants dep = deps.get(i);
-            if (!installed(dep.getName(), dep.getVersion()) && dependenciesState.containsKey(dep.getName() + "=" + dep.getVersion())) {
-                List<Dependency> collect = dependenciesState.values().stream()
-                        .filter(d -> d.conflictsWith(dep.getName(), dep.getVersion()).size() > 0).collect(Collectors.toList());
-                if (collect.size() > 0) throw new InvalidStateException(REASON_CONFLICT);
-                else install(new AddInstruction(dep.getName(), dep.getVersion()));
+        Dependants dep = deps.get(0);
+        deps.remove(0);
+        if (!installed(dep.getName(), dep.getVersion()) && dependenciesState.containsKey(dep.getName() + "=" + dep.getVersion())) {
+            List<Dependency> collect = dependenciesState.values().stream()
+                    .filter(d -> d.conflictsWith(dep.getName(), dep.getVersion()).size() > 0).collect(Collectors.toList());
+            if (collect.size() > 0 || futureConflicts(dep)) incInstallDeps(deps);
+            else if (deps.size() <= 0) throw new InvalidStateException(REASON_CONFLICT);
+            else install(new AddInstruction(dep.getName(), dep.getVersion()));
+        }
+    }
+
+    // dep -> [op1,op2]
+    // if constraints -> conflicts -> equals dep -> true
+
+    private boolean futureConflicts(Dependants dep) {
+        for (List<Conflict> cL : constraints.values()) {
+            for (Conflict c : cL) {
+                Dependency dependency = dependenciesState.get(c.getName() + "=" + c.getVersion());
+                if (dependency.conflictsWith(dep.getName(), dep.getVersion()).size() > 0) return true;
             }
         }
+        return false;
     }
 
     private void incUninstallRedundantDeps(List<Dependants> deps) throws Exception {
