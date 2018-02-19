@@ -74,15 +74,37 @@ public class State {
     }
 
     private void incInstallDeps(List<Dependants> deps) throws Exception {
+        if (deps.size() <= 0) throw new InvalidStateException(REASON_CONFLICT);
         Dependants dep = deps.get(0);
         deps.remove(0);
         if (!installed(dep.getName(), dep.getVersion()) && dependenciesState.containsKey(dep.getName() + "=" + dep.getVersion())) {
-            List<Dependency> collect = dependenciesState.values().stream()
+            List<Dependency> conflicts = dependenciesState.values().stream()
                     .filter(d -> d.conflictsWith(dep.getName(), dep.getVersion()).size() > 0).collect(Collectors.toList());
-            if (collect.size() > 0 || futureConflicts(dep)) incInstallDeps(deps);
-            else if (deps.size() <= 0) throw new InvalidStateException(REASON_CONFLICT);
-            else install(new AddInstruction(dep.getName(), dep.getVersion()));
+            if (futureConflicts(dep)) incInstallDeps(deps);
+            else if (conflicts.size() > 0 && canUninstall(conflicts)) {
+                uninstallConflicts(conflicts);
+                install(new AddInstruction(dep.getName(), dep.getVersion()));
+            } else install(new AddInstruction(dep.getName(), dep.getVersion()));
         }
+    }
+
+    private void uninstallConflicts(List<Dependency> conflicts) throws Exception {
+        for (Dependency d : conflicts) {
+            RemoveInstruction removeInstruction = new RemoveInstruction(d.name, d.version);
+            uninstall(removeInstruction);
+        }
+    }
+
+    // check against all constraint deps to see if these conflicts are required.
+    // if they are required then {false} otherwise {true}
+    private boolean canUninstall(List<Dependency> conflicts) {
+        for (Dependency d : conflicts)
+        for (List<Conflict> constraintsList : constraints.values())
+        for (Conflict conflict : constraintsList) {
+            Dependency dependency = dependenciesState.get(conflict.getName() + "=" + conflict.getVersion());
+            if (dependency.requiredWith(d.name, d.version).size() > 0) return false;
+        }
+        return true;
     }
 
     // dep -> [op1,op2]
