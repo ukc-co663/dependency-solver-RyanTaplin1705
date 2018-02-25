@@ -5,13 +5,13 @@ import model.Operation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dependants {
+public class Dependant {
 
     private String name;
     private String version;
     private Operation operation;
 
-    public Dependants(String name, String version, Operation operation) {
+    public Dependant(String name, String version, Operation operation) {
         this.name = name;
         this.version = version;
         this.operation = operation;

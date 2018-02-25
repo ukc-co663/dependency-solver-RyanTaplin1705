@@ -1,11 +1,11 @@
 all: compile
 
-compile: deps
+compile: dependants
 	./scripts/compile.sh
 
-deps:
+dependants:
 	./scripts/install_deps.sh
-	touch deps
+	touch dependants
 
 test: compile
 	./scripts/run_tests.sh
@@ -14,6 +14,6 @@ clean:
 	rm -rf classes
 
 reallyclean: clean
-	rm -rf lib deps
+	rm -rf lib dependants
 
 .PHONY: all compile test clean reallyclean

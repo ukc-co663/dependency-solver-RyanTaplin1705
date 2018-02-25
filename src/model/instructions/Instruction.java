@@ -16,6 +16,8 @@ public interface Instruction {
     String getName();
     void run(State state) throws Exception;
 
+    //what happens if an instruction to install A, i.e install all of A.
+    //What if a higher version of A conflicts with lower?
     static List<Instruction> create(String s, State machine) throws Exception {
         Action action = Action.convert(s.charAt(0));
         String rest = s.substring(1, s.length());
@@ -32,13 +34,13 @@ public interface Instruction {
     static List<Dependency> getDeps(String name, String version, Operation op, Action action, State machine) throws Exception {
         switch (op) {
             case NONE:
-                return machine.repository.getDependency(name);
+                return machine.getRepository().getDependency(name);
             case LESS_THAN:
             case GREATER_THAN:
             case LESS_THAN_OR_EQUAL_TO:
             case GREATER_THAN_OR_EQUAL_TO:
             case EQUAL_TO:
-                return machine.repository.getDependency(name).stream()
+                return machine.getRepository().getDependency(name).stream()
                         .filter(dep -> versionEvaluate(dep.version, version, op)).collect(Collectors.toList());
             default:
                 throw new Exception("Operation " + op.getStringValue() + " is not mapped or does not exist.");

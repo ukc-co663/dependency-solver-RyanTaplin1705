@@ -1,5 +1,6 @@
 package util;
 
+import model.Machine;
 import model.State;
 import model.exceptions.InvalidParsingException;
 import model.instructions.Instruction;
@@ -7,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import repository.DependencyRepository;
 import repository.model.Conflict;
-import repository.model.Dependants;
+import repository.model.Dependant;
 import repository.model.Dependency;
 import model.Operation;
 
@@ -27,11 +28,11 @@ import static util.StringParser.extractVersionFromString;
 
 public class Setup {
 
-    public static State getMachine(String repositoryPath, String initialStatePath, String constraintsPath) throws Exception {
-        return new State(repositoryPath, initialStatePath, constraintsPath);
+    public static Machine getMachine(String repositoryPath, String initialStatePath, String constraintsPath) throws Exception {
+        return new Machine(new State(repositoryPath, initialStatePath, constraintsPath));
     }
 
-    public static HashMap<String, LinkedList<Dependency>> getRepository(String filePath) {
+    public static HashMap<String, LinkedList<Dependency>> readRepository(String filePath) {
         JSONArray json = new JSONArray(readFile(filePath));
 
         HashMap<String, LinkedList<Dependency>> deps = new HashMap<>();
@@ -42,7 +43,7 @@ public class Setup {
             String name = object.getString("name");
             String version = object.getString("version");
             List<Conflict> conf = parseConflicts(getJSONArray(object, "confs"));
-            List<Dependants> dependants = parseDependants(getJSONArray(object, "depends"));
+            List<Dependant> dependants = parseDependants(getJSONArray(object, "depends"));
 
             LinkedList<Dependency> tArr = deps.getOrDefault(name, new LinkedList());
             deps.put(name, genericArrayAdd(tArr, new Dependency(name, version, size, conf, dependants)));
@@ -50,12 +51,11 @@ public class Setup {
         return deps;
     }
 
-    public static HashMap<String, LinkedList<Conflict>> getConstraints(String filePath) throws InvalidParsingException {
+    public static HashMap<String, LinkedList<Conflict>> readConstraints(String filePath) throws InvalidParsingException {
         JSONArray arr = new JSONArray(readFile(filePath));
 
         HashMap<String, LinkedList<Conflict>> deps = new HashMap<>();
         for (int i = 0; i < arr.length(); i ++) {
-
             String raw = arr.getString(i).substring(1, arr.getString(i).length());
             Operation op = extractOperator(raw);
             String name = raw.substring(0, raw.indexOf(op.getStringValue()));
@@ -67,7 +67,7 @@ public class Setup {
         return deps;
     }
 
-    public static HashMap<String, Dependency> getInitialState(String filePath, DependencyRepository dr) throws Exception {
+    public static HashMap<String, Dependency> readInitialState(String filePath, DependencyRepository dr) throws Exception {
         JSONArray json = new JSONArray(readFile(filePath));
         HashMap<String, Dependency> initial = new HashMap<>(); // needs populating from .json files
         for (int i = 0; i < json.length(); i++) {
@@ -104,6 +104,8 @@ public class Setup {
         }
         return instructions;
     }
+
+
 
     private static <T> LinkedList<T> genericArrayAdd(LinkedList<T> list, T result) {
         list.add(result);

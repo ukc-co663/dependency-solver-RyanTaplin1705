@@ -10,14 +10,14 @@ public class Dependency {
     public int size;
 
     public List<Conflict> confs;
-    public List<Dependants> deps;
+    public List<Dependant> dependants;
 
-    public Dependency(String name, String version, int size, List<Conflict> conf, List<Dependants> deps) {
+    public Dependency(String name, String version, int size, List<Conflict> conf, List<Dependant> dependants) {
         this.name = name;
         this.version = version;
         this.size = size;
         this.confs = conf;
-        this.deps = deps;
+        this.dependants = dependants;
     }
 
     public List<Conflict> conflictsWith(String name, String version) {
@@ -28,8 +28,9 @@ public class Dependency {
         }).collect(Collectors.toList());
     }
 
-    public List<Dependants> requiredWith(String name, String version) {
-        return this.deps.stream().map(dep -> {
+    // not sure i actually understand what this is doing.
+    public List<Dependant> requiredBy(String name, String version) {
+        return this.dependants.stream().map(dep -> {
             if (dep.getName().equals(name) && !dep.isRequired(version)) return dep;
             else return null;
         }).collect(Collectors.toList());

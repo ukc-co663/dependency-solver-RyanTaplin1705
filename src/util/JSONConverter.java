@@ -3,7 +3,7 @@ package util;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import repository.model.Conflict;
-import repository.model.Dependants;
+import repository.model.Dependant;
 import model.Operation;
 
 import java.util.ArrayList;
@@ -45,8 +45,8 @@ public class JSONConverter {
         return conf;
     }
 
-    public static List<Dependants> parseDependants(JSONArray arrDeps) {
-        List<Dependants> deps = new ArrayList<>();
+    public static List<Dependant> parseDependants(JSONArray arrDeps) {
+        List<Dependant> deps = new ArrayList<>();
         for (int i = 0; i < arrDeps.length(); i++) {
             JSONArray array = arrDeps.optJSONArray(i);
             if (array != null) {
@@ -60,24 +60,24 @@ public class JSONConverter {
         return deps;
     }
 
-    private static Dependants createDep(String s) {
+    private static Dependant createDep(String s) {
         if (s.contains(">=")) {
             String[] p = s.split(">=");
-            return new Dependants(p[0], p[1], Operation.GREATER_THAN_OR_EQUAL_TO);
+            return new Dependant(p[0], p[1], Operation.GREATER_THAN_OR_EQUAL_TO);
         } else if (s.contains("<=")) {
             String[] p = s.split("<=");
-            return new Dependants(p[0], p[1], Operation.LESS_THAN_OR_EQUAL_TO);
+            return new Dependant(p[0], p[1], Operation.LESS_THAN_OR_EQUAL_TO);
         } else if (s.contains("<")) {
             String[] p = s.split("<");
-            return new Dependants(p[0], p[1], Operation.LESS_THAN);
+            return new Dependant(p[0], p[1], Operation.LESS_THAN);
         } else if (s.contains(">")) {
             String[] p = s.split(">");
-            return new Dependants(p[0], p[1], Operation.GREATER_THAN);
+            return new Dependant(p[0], p[1], Operation.GREATER_THAN);
         } else if (s.contains("=")) {
             String[] p = s.split("=");
-            return new Dependants(p[0], p[1], Operation.EQUAL_TO);
+            return new Dependant(p[0], p[1], Operation.EQUAL_TO);
         } else {
-            return new Dependants(s, null, Operation.NONE);
+            return new Dependant(s, null, Operation.NONE);
         }
     }
 }
