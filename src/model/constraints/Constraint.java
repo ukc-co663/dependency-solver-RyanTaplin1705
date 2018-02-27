@@ -7,7 +7,7 @@ import static model.Operation.extractOperator;
 
 public class Constraint {
 
-    public static ParsedConstraint parseJSON(String json) {
+    public static ParsedConstraint parseJSON(String json) throws Exception {
         String raw = json.substring(1, json.length());
 
         Operation op = extractOperator(raw);

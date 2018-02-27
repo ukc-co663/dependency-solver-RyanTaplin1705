@@ -5,7 +5,6 @@ import model.constraints.ForbiddenConstraint;
 import model.constraints.InstallConstraint;
 import model.states.State;
 import model.states.ValidState;
-import model.states.VirtualState;
 import repository.PackageRepository;
 import repository.model.Package;
 
@@ -36,8 +35,16 @@ public class Machine {
             else if (c instanceof ForbiddenConstraint) inspectors.add((ForbiddenConstraint)c);
             else throw new Exception("Constraint type did not match..");
         }
-        LinkedList<ValidState> solutions = removeInvalidSolutions(inspectors, processInstallations(installed));
+        LinkedList<ValidState> solutions = removeInvalidSolutions(inspectors, getValid(processInstallations(installed)));
         return optimal(solutions); // if we have multiple solutions return the highest
+    }
+
+    private LinkedList<ValidState> getValid(LinkedList<State> states) {
+        LinkedList<ValidState> rs = new LinkedList<>();
+        for(int i = 0; i < states.size(); i++) {
+            if (!(states.get(i) instanceof ValidState)) rs.add((ValidState)states.get(i));
+        }
+        return rs;
     }
 
     private ValidState optimal(LinkedList<ValidState> states) throws Exception {
@@ -64,20 +71,21 @@ public class Machine {
         return solutions;
     }
 
-    private LinkedList<ValidState> processInstallations(List<InstallConstraint> installed) throws Exception {
-        LinkedList<ValidState> solutions = new LinkedList<>();
+    //upgrade to ValidFinalState...
+    private LinkedList<State> processInstallations(List<InstallConstraint> installed) throws Exception {
+        LinkedList<State> solutions = new LinkedList<>();
         for (InstallConstraint c : installed) {
             for (Package p : c.packages) {
-                VirtualState virtualState = state.virtualize();
-                List<Package> conflictingPackages = virtualState.getConflicts(p); //conflicts will return a list of packages that conflict with this
-                if (conflictingPackages.isEmpty()) solutions.add(virtualState.addPackage(p).complete()); //if no conflicts then go ahead and install
+                State s = state.clone();
+                List<Package> conflictingPackages = s.getConflicts(p); //conflicts will return a list of packages that conflict with this
+                if (conflictingPackages.isEmpty()) solutions.addAll(s.addPackage(p)); //if no conflicts then go ahead and install
                 else {
                     // If there are conflicts try to uninstall until in a packages where we can install.
                     // If you can never get to that packages then it is invalid and reject.
                     for (Package cp : conflictingPackages) {
-                        if (!cp.isRequired(state)) virtualState.removePackage(cp);
+                        if (!cp.isRequired(state)) s.removePackage(cp);
                     }
-                    solutions.add(virtualState.addPackage(p).complete());
+                    solutions.addAll(s.addPackage(p));
                 }
             }
         }

@@ -8,14 +8,10 @@ import java.util.LinkedList;
 
 import static util.Printer.stringFormat;
 
-public class ValidState  {
-
-    public final LinkedList<Package> packages;
-    public final LinkedList<Instruction> history;
+public class ValidState extends State {
 
     public ValidState(LinkedList<Package> packages, LinkedList<Instruction> history) throws Exception {
-        this.packages = packages;
-        this.history = history;
+        super(packages, history);
     }
 
     public int cost() {
