@@ -1,26 +1,19 @@
 package util;
 
-import model.Machine;
-import model.State;
-import model.exceptions.InvalidParsingException;
-import model.instructions.Instruction;
+import model.constraints.Constraint;
+import model.constraints.ForbiddenConstraint;
+import model.constraints.InstallConstraint;
+import model.constraints.ParsedConstraint;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import repository.DependencyRepository;
-import repository.model.Conflict;
-import repository.model.Dependant;
-import repository.model.Dependency;
-import model.Operation;
+import repository.PackageRepository;
+import repository.model.Package;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
-import static model.Operation.NONE;
-import static model.Operation.extractOperator;
 import static util.FileReader.readFile;
-import static util.JSONConverter.getJSONArray;
 import static util.JSONConverter.parseConflicts;
 import static util.JSONConverter.parseDependants;
 import static util.StringParser.extractNameFromString;
@@ -28,84 +21,68 @@ import static util.StringParser.extractVersionFromString;
 
 public class Setup {
 
-    public static Machine getMachine(String repositoryPath, String initialStatePath, String constraintsPath) throws Exception {
-        return new Machine(new State(repositoryPath, initialStatePath, constraintsPath));
-    }
+    // this needs to be done better....
+    public static HashMap<String, LinkedList<Package>> readRepository(String path) throws Exception {
+        JSONArray json = new JSONArray(readFile(path));
 
-    public static HashMap<String, LinkedList<Dependency>> readRepository(String filePath) {
-        JSONArray json = new JSONArray(readFile(filePath));
-
-        HashMap<String, LinkedList<Dependency>> deps = new HashMap<>();
+        //create base without dependants / conflicts
+        HashMap<String, LinkedList<Package>> packages = new HashMap<>();
         for (int i = 0; i < json.length(); i ++) {
             JSONObject object = json.getJSONObject(i);
 
             int size = object.getInt("size");
             String name = object.getString("name");
             String version = object.getString("version");
-            List<Conflict> conf = parseConflicts(getJSONArray(object, "confs"));
-            List<Dependant> dependants = parseDependants(getJSONArray(object, "depends"));
 
-            LinkedList<Dependency> tArr = deps.getOrDefault(name, new LinkedList());
-            deps.put(name, genericArrayAdd(tArr, new Dependency(name, version, size, conf, dependants)));
+            LinkedList<Package> tArr = packages.getOrDefault(name, new LinkedList());
+            packages.put(name, genericArrayAdd(tArr, new Package(name, version, size, Arrays.asList(), Arrays.asList())));
         }
-        return deps;
-    }
 
-    public static HashMap<String, LinkedList<Conflict>> readConstraints(String filePath) throws InvalidParsingException {
-        JSONArray arr = new JSONArray(readFile(filePath));
+        //process json array to apply deps/confs
+        for(int i = 0; i < json.length(); i++) {
+            JSONObject object = json.getJSONObject(i);
+            String name = object.getString("name");
+            String version = object.getString("version");
 
-        HashMap<String, LinkedList<Conflict>> deps = new HashMap<>();
-        for (int i = 0; i < arr.length(); i ++) {
-            String raw = arr.getString(i).substring(1, arr.getString(i).length());
-            Operation op = extractOperator(raw);
-            String name = raw.substring(0, raw.indexOf(op.getStringValue()));
-            String version = op.equals(NONE) ? null :  raw.substring(raw.indexOf(op.getStringValue()), raw.length());
-
-            LinkedList<Conflict> tArr = deps.getOrDefault(name, new LinkedList());
-            deps.put(name, genericArrayAdd(tArr, new Conflict(name, version, op)));
-        }
-        return deps;
-    }
-
-    public static HashMap<String, Dependency> readInitialState(String filePath, DependencyRepository dr) throws Exception {
-        JSONArray json = new JSONArray(readFile(filePath));
-        HashMap<String, Dependency> initial = new HashMap<>(); // needs populating from .json files
-        for (int i = 0; i < json.length(); i++) {
-            String instr = json.getString(i);
-            String name = extractNameFromString(instr);
-
-            HashMap<String, LinkedList<Dependency>> dependencies = dr.getAllDependencies();
-            if (dependencies.containsKey(name)) {
-                if (!instr.contains("=")) {
-                    for (Dependency d : dependencies.get(name)) {
-                        initial.put(d.getKey(), d);
-                    }
-                } else {
-                    Dependency d = getDependencyOfVersion(extractVersionFromString(instr), dependencies.get(name));
-                    initial.put(d.getKey(), d);
+            for(Package p : packages.get(name)) {
+                if (p.version.equals(version)) {
+                    p.dependants = parseDependants(json, new PackageRepository(packages));
+                    p.conflicts = parseConflicts(json, new PackageRepository(packages));
                 }
-            } else throw new Exception("Can't find dependency " + name + " in the machine repository.");
+            }
         }
-        return initial;
+        return packages;
     }
 
-    public static Dependency getDependencyOfVersion(String version, LinkedList<Dependency> dependencies) throws Exception {
-        for (int i = 0; i < dependencies.size(); i++) {
-            if (dependencies.get(i).version.equals(version)) return dependencies.get(i);
-        }
-        throw new Exception(dependencies.get(0).name + " does not have version: " + version);
-    }
-
-    public static List<Instruction> getInstructions(String constraintsPath, State machine) throws Exception {
-        JSONArray json = new JSONArray(readFile(constraintsPath));
-        List<Instruction> instructions = new ArrayList<>();
+    public static LinkedList<Package> readInitial(String filePath, PackageRepository dr) throws Exception {
+        JSONArray json = new JSONArray(readFile(filePath));
+        LinkedList<Package> initialState = new LinkedList<>(); // needs populating from .json files
         for (int i = 0; i < json.length(); i++) {
-            instructions.addAll(Instruction.create(json.getString(i), machine));
+            String input = json.getString(i);
+            initialState.add(
+                    dr.getDependency(extractNameFromString(input))
+                            .ofVersion(extractVersionFromString(input))
+            );
         }
-        return instructions;
+        return initialState;
     }
 
+    public static LinkedList<Constraint> readConstraints(String filePath, PackageRepository repository) throws Exception {
+        JSONArray json = new JSONArray(readFile(filePath));
+        LinkedList<Constraint> constraints = new LinkedList<>();
+        for (int i = 0; i < json.length(); i++) {
+            String input = json.getString(i);
+            ParsedConstraint cp = Constraint.parseJSON(input);
 
+            LinkedList<Package> p = repository.getDependency(cp.name).ofVersions(cp.op, cp.version);
+            if(input.charAt(0) == '+') {
+                constraints.add(new InstallConstraint(p));
+            } else if (input.charAt(0) == '-') {
+                constraints.add(new ForbiddenConstraint(p));
+            } else throw new Exception("Constraint format is not recognised.");
+        }
+        return constraints;
+    }
 
     private static <T> LinkedList<T> genericArrayAdd(LinkedList<T> list, T result) {
         list.add(result);

@@ -1,6 +1,5 @@
 import junit.framework.TestCase;
-import model.State;
-import model.instructions.Instruction;
+import model.states.State;
 import org.junit.Test;
 import util.Setup;
 

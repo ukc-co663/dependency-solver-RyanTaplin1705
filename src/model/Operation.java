@@ -1,7 +1,5 @@
 package model;
 
-import model.exceptions.InvalidParsingException;
-
 public enum Operation {
 
     GREATER_THAN(">"), GREATER_THAN_OR_EQUAL_TO(">="),
@@ -35,10 +33,10 @@ public enum Operation {
         return stringValue;
     }
 
-    public static Operation extractOperator(String s) throws InvalidParsingException {
+    public static Operation extractOperator(String s) throws Exception {
         for(Operation o : Operation.values()) {
             if (s.contains(o.getStringValue())) return o;
         }
-        throw new InvalidParsingException("Invalid operator {" + s + "} is being processed.");
+        throw new Exception("Invalid operator {" + s + "} is being processed.");
     }
 }

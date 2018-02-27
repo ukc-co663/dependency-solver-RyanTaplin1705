@@ -1,12 +1,16 @@
 package util;
 
+import model.Operation;
+import model.constraints.ParsedConstraint;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import repository.model.Conflict;
-import repository.model.Dependant;
-import model.Operation;
+import repository.ConflictPackages;
+import repository.OptionalPackages;
+import repository.PackageRepository;
+import repository.model.Package;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class JSONConverter {
@@ -19,65 +23,50 @@ public class JSONConverter {
         }
     }
 
-    public static List<Conflict> parseConflicts(JSONArray arrConf) {
-        List<Conflict> conf = new ArrayList<>();
-        for (int j = 0; j < arrConf.length(); j++) {
-            String s = arrConf.getString(j);
-            if (s.contains(">=")) { //todo check this. not remove all of the operator in some cases
-                String[] p = s.split(">=");
-                conf.add(new Conflict(p[0], p[1], Operation.GREATER_THAN_OR_EQUAL_TO));
-            } else if (s.contains("<=")) {
-                String[] p = s.split("<=");
-                conf.add(new Conflict(p[0], p[1], Operation.LESS_THAN_OR_EQUAL_TO));
-            } else if (s.contains("<")) {
-                String[] p = s.split("<");
-                conf.add(new Conflict(p[0], p[1], Operation.LESS_THAN));
-            } else if (s.contains(">")) {
-                String[] p = s.split(">");
-                conf.add(new Conflict(p[0], p[1], Operation.GREATER_THAN));
-            } else if (s.contains("=")) {
-                String[] p = s.split("=");
-                conf.add(new Conflict(p[0], p[1], Operation.EQUAL_TO));
-            } else {
-                conf.add(new Conflict(s, null, Operation.NONE));
-            }
+    public static List<ConflictPackages> parseConflicts(JSONArray json, PackageRepository packageRepository) throws Exception {
+        LinkedList<ConflictPackages> result = new LinkedList<>();
+        for (int j = 0; j < json.length(); j++) {
+            ParsedConstraint pc = convertJSON(json.getString(j));
+            result.add(new ConflictPackages(packageRepository.getDependency(pc.name).ofVersions(pc.op, pc.version)));
         }
-        return conf;
+        return result;
     }
 
-    public static List<Dependant> parseDependants(JSONArray arrDeps) {
-        List<Dependant> deps = new ArrayList<>();
-        for (int i = 0; i < arrDeps.length(); i++) {
-            JSONArray array = arrDeps.optJSONArray(i);
-            if (array != null) {
-                for (int j = 0; j < array.length(); j++) {
-                    deps.add(createDep(array.getString(j)));
+    public static List<OptionalPackages> parseDependants(JSONArray json, PackageRepository packageRepository) throws Exception {
+        List<OptionalPackages> result = new ArrayList<>();
+        for (int i = 0; i < json.length(); i++) {
+            JSONArray choices = json.optJSONArray(i);
+            if (choices != null) {
+                LinkedList<Package> packages = new LinkedList<>();
+                for (int j = 0; j < choices.length(); j++) { // catering for multi-option dependant
+                    ParsedConstraint pc = convertJSON(choices.getString(j));
+                    packages.addAll(packageRepository.getDependency(pc.name).ofVersions(pc.op, pc.version));
                 }
+                result.add(new OptionalPackages(packages));
             } else {
-                deps.add(createDep(arrDeps.getString(i)));
+                ParsedConstraint pc = convertJSON(json.getString(i)); // cater for singular option dependant
+                result.add(new OptionalPackages(packageRepository.getDependency(pc.name).ofVersions(pc.op, pc.version)));
             }
         }
-        return deps;
+        return result;
     }
 
-    private static Dependant createDep(String s) {
+    private static ParsedConstraint convertJSON(String s) throws Exception {
         if (s.contains(">=")) {
             String[] p = s.split(">=");
-            return new Dependant(p[0], p[1], Operation.GREATER_THAN_OR_EQUAL_TO);
+            return new ParsedConstraint(p[0], p[1], Operation.GREATER_THAN_OR_EQUAL_TO);
         } else if (s.contains("<=")) {
             String[] p = s.split("<=");
-            return new Dependant(p[0], p[1], Operation.LESS_THAN_OR_EQUAL_TO);
+            return new ParsedConstraint(p[0], p[1], Operation.LESS_THAN_OR_EQUAL_TO);
         } else if (s.contains("<")) {
             String[] p = s.split("<");
-            return new Dependant(p[0], p[1], Operation.LESS_THAN);
+            return new ParsedConstraint(p[0], p[1], Operation.LESS_THAN);
         } else if (s.contains(">")) {
             String[] p = s.split(">");
-            return new Dependant(p[0], p[1], Operation.GREATER_THAN);
+            return new ParsedConstraint(p[0], p[1], Operation.GREATER_THAN);
         } else if (s.contains("=")) {
             String[] p = s.split("=");
-            return new Dependant(p[0], p[1], Operation.EQUAL_TO);
-        } else {
-            return new Dependant(s, null, Operation.NONE);
-        }
+            return new ParsedConstraint(p[0], p[1], Operation.EQUAL_TO);
+        } else throw new Exception("Invalid conflict json parsed in.");
     }
 }

@@ -1,17 +1,19 @@
 package model.instructions;
 
-public class RemoveInstruction implements Instruction {
+public class InstallInstruction implements Instruction {
 
     public String name;
     public String version;
+    public int size;
 
-    public RemoveInstruction(String name, String version) {
+    public InstallInstruction(String name, String version, int size) {
         this.name = name;
         this.version = version;
+        this.size = size;
     }
 
     public int cost() {
-        return 1000000;
+        return size;
     }
 
     @Override
