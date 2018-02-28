@@ -1,17 +1,18 @@
 package model.states;
 
+import model.constraints.ForbiddenConstraint;
 import model.instructions.Instruction;
-import org.json.JSONArray;
+import model.states.types.Valid;
+import repository.PackageRepository;
 import repository.model.Package;
 
 import java.util.LinkedList;
+import java.util.List;
 
-import static util.Printer.stringFormat;
+public class ValidState extends State implements Valid {
 
-public class ValidState extends State {
-
-    public ValidState(LinkedList<Package> packages, LinkedList<Instruction> history) throws Exception {
-        super(packages, history);
+    public ValidState(LinkedList<Package> packages, LinkedList<Instruction> history, LinkedList<Package> priorityQ) throws Exception {
+        super(packages, history, priorityQ);
     }
 
     public int cost() {
@@ -22,7 +23,19 @@ public class ValidState extends State {
         return total;
     }
 
-    public void printResults() throws Exception {
-            System.out.println(new JSONArray(stringFormat(history)));
+    @Override
+    public boolean isValid() {
+        return true;
+    }
+
+    @Override
+    public boolean isFinal() {
+        return false;
+    }
+
+    @Override
+    public List<FinalState> inspection(List<ForbiddenConstraint> inspectors, PackageRepository packageRepository) throws Exception {
+        throw new Exception("TODO");
+//        return new ValidFinalState(null, null);
     }
 }

@@ -1,6 +1,5 @@
 package model.states;
 
-import model.constraints.ForbiddenConstraint;
 import model.instructions.Instruction;
 import model.states.types.Final;
 import model.states.types.Valid;
@@ -8,13 +7,12 @@ import org.json.JSONArray;
 import repository.model.Package;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import static util.Printer.stringFormat;
 
-public class ValidFinalState extends State implements Final, Valid {
+public class FinalState extends State implements Final {
 
-    public ValidFinalState(LinkedList<Package> packages, LinkedList<Instruction> history) throws Exception {
+    public FinalState(LinkedList<Package> packages, LinkedList<Instruction> history) throws Exception {
         super(packages, history);
     }
 
@@ -26,13 +24,9 @@ public class ValidFinalState extends State implements Final, Valid {
         return total;
     }
 
-    public void printResults() throws Exception {
-        System.out.println(new JSONArray(stringFormat(history)));
-    }
-
     @Override
     public boolean isValid() {
-        return true;
+        return this instanceof Valid;
     }
 
     @Override
@@ -41,7 +35,7 @@ public class ValidFinalState extends State implements Final, Valid {
     }
 
     @Override
-    public List<Final> inspection(List<ForbiddenConstraint> inspectors) throws Exception {
-        throw new Exception("Shouldn't be inspecting final states...");
+    public void printResults() throws Exception {
+        System.out.println(new JSONArray(stringFormat(history)));
     }
 }

@@ -1,15 +1,13 @@
 package model.constraints;
 
-import repository.model.Package;
-
-import java.util.LinkedList;
+import repository.OptionalPackages;
 
 public class InstallConstraint extends Constraint {
 
     // must install one of these packages...
-    public LinkedList<Package> packages;
+    public OptionalPackages packages;
 
-    public InstallConstraint(LinkedList<Package> packages) {
+    public InstallConstraint(OptionalPackages packages) {
         this.packages = packages;
     }
 }

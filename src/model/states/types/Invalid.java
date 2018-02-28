@@ -1,5 +1,4 @@
-package model.states;
+package model.states.types;
 
-public interface Invalid {
-
+public interface Invalid extends State {
 }

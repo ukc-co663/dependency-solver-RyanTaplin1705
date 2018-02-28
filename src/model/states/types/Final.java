@@ -1,5 +1,5 @@
-package model.states;
+package model.states.types;
 
-public interface FinalState {
-
+public interface Final extends State {
+    void printResults() throws Exception;
 }

@@ -6,6 +6,7 @@ import model.constraints.InstallConstraint;
 import model.constraints.ParsedConstraint;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import repository.OptionalPackages;
 import repository.PackageRepository;
 import repository.model.Package;
 
@@ -76,7 +77,7 @@ public class Setup {
 
             LinkedList<Package> p = repository.getDependency(cp.name).ofVersions(cp.op, cp.version);
             if(input.charAt(0) == '+') {
-                constraints.add(new InstallConstraint(p));
+                constraints.add(new InstallConstraint(new OptionalPackages(p)));
             } else if (input.charAt(0) == '-') {
                 constraints.add(new ForbiddenConstraint(p));
             } else throw new Exception("Constraint format is not recognised.");

@@ -1,11 +1,11 @@
 package model.states.types;
 
 import model.constraints.ForbiddenConstraint;
+import model.states.FinalState;
+import repository.PackageRepository;
 
 import java.util.List;
 
-public interface Valid {
-    boolean isValid();
-    boolean isFinal();
-    List<Final> inspection(List<ForbiddenConstraint> inspectors) throws Exception;
+public interface Valid extends State {
+    List<FinalState> inspection(List<ForbiddenConstraint> inspectors, PackageRepository packageRepository) throws Exception;
 }
