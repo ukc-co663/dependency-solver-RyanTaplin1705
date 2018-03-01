@@ -118,7 +118,7 @@ public class State {
               }
         }
         deletePackage(pk);
-        return null;
+        return this.clone();
     }
 
     private LinkedList<Package> getDependents(Package p) {
