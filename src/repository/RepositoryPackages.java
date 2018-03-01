@@ -27,7 +27,7 @@ public class RepositoryPackages {
     public LinkedList<Package> ofVersions(Operation op, String version) throws Exception {
         LinkedList<Package> result = new LinkedList<>();
         for (Package p : this.packages) {
-            if (VersionChecker.versionEvaluate(p.version, version, op)) {
+            if (op.equals(Operation.NONE) || VersionChecker.versionEvaluate(p.version, version, op)) {
                 result.add(p);
             }
         }
