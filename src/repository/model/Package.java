@@ -1,6 +1,5 @@
 package repository.model;
 
-import model.states.State;
 import repository.ConflictPackages;
 import repository.OptionalPackages;
 
@@ -21,9 +20,5 @@ public class Package {
         this.size = size;
         this.conflicts = conf;
         this.dependants = dependants;
-    }
-
-    public boolean isRequired(State state) throws Exception {
-        throw new Exception("TODO");
     }
 }

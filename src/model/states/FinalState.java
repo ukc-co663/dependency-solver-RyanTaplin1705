@@ -12,8 +12,8 @@ import static util.Printer.stringFormat;
 
 public class FinalState extends State implements Final {
 
-    public FinalState(LinkedList<Package> packages, LinkedList<Instruction> history) throws Exception {
-        super(packages, history);
+    public FinalState(LinkedList<Package> packages, LinkedList<Instruction> history, LinkedList<Package> priorityQ) throws Exception {
+        super(packages, history, priorityQ);
     }
 
     public int cost() {
