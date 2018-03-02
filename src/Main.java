@@ -21,6 +21,6 @@ public class Main {
     }
 
     public static void start(Machine m, List<Constraint> cs) throws Exception {
-        m.satisfyConstraints(cs);
+        m.satisfyConstraints(cs).printResults();
     }
 }
