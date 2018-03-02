@@ -1,11 +1,16 @@
 import junit.framework.TestCase;
-import util.CoreTestCase;
 import model.Machine;
+import model.constraints.Constraint;
+import model.constraints.ForbiddenConstraint;
+import model.constraints.InstallConstraint;
 import model.states.FinalState;
 import model.states.State;
 import org.junit.Assert;
 import org.junit.Test;
 import repository.model.Package;
+import util.CoreTestCase;
+
+import java.util.List;
 
 public class MachineTests extends TestCase {
 
@@ -20,21 +25,48 @@ public class MachineTests extends TestCase {
     public void testCase0() throws Exception {
         CoreTestCase testCase = new CoreTestCase(0);
         Machine machine = testCase.createMachine();
-        FinalState state = machine.satisfyConstraints(testCase.getConstraints());
-        assertStateMatch(state, testCase.getSolution());
+        List<Constraint> constraints = testCase.getConstraints();
+        FinalState state = machine.satisfyConstraints(constraints);
+        assertStateMatch(state, constraints);
     }
 
-    private void assertStateMatch(State ans,  State sol) {
-        if (ans.packages.size() != sol.packages.size()) Assert.fail("Solution stats differ in size.");
-        for(Package ap : ans.packages) {
-            boolean f = false;
-            for (Package sp : sol.packages) {
-                if (ap.name.equals(sp.name)) {
-                    f = true;
-                    break;
+    @Test
+    public void testCase1() throws Exception {
+        CoreTestCase testCase = new CoreTestCase(1);
+        Machine machine = testCase.createMachine();
+        List<Constraint> constraints = testCase.getConstraints();
+        FinalState state = machine.satisfyConstraints(constraints);
+        assertStateMatch(state, constraints);
+    }
+
+    private void assertStateMatch(State ans,  List<Constraint> constraints) {
+        for (Constraint c : constraints) {
+            if (c instanceof  InstallConstraint) {
+                InstallConstraint c1 = (InstallConstraint) c;
+                for (Package p : c1.optional.packages) {
+                    boolean f = false;
+                    for (Package p2 : ans.packages) {
+                        if (p.name.equals(p2.name)) {
+                            f = true;
+                            break;
+                        }
+                    }
+                    if (!f) Assert.fail("Missing constraint installation.");
                 }
-            }
-            if (!f) Assert.fail("Package " + ap.name + " was not found recognised in solution.");
+            } else if (c instanceof ForbiddenConstraint) {
+                ForbiddenConstraint c1 = (ForbiddenConstraint) c;
+                for (Package p : ans.packages) {
+                    boolean f = false;
+                    for (Package p2 : c1.packages) {
+                        if (p.name.equals(p2.name)) {
+                            f = true;
+                            break;
+                        }
+                    }
+                    if (f) Assert.fail("A forbidden constraint found in final solution.");
+                }
+            } else Assert.fail("Invalid constraint type...");
         }
+        assertTrue("Constraints and state match. May not be valid.", true);
     }
 }

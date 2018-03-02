@@ -7,5 +7,5 @@ import repository.PackageRepository;
 import java.util.List;
 
 public interface Valid extends State {
-    List<FinalState> inspection(List<ForbiddenConstraint> inspectors, PackageRepository packageRepository) throws Exception;
+    FinalState inspection(List<ForbiddenConstraint> inspectors, PackageRepository packageRepository) throws Exception;
 }

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class State {
 
-    private LinkedList<Package> priorityQ;
+    public LinkedList<Package> priorityQ;
     public LinkedList<Instruction> history;
     public LinkedList<Package> packages;
 

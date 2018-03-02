@@ -34,7 +34,14 @@ public class ValidState extends State implements Valid {
     }
 
     @Override
-    public List<FinalState> inspection(List<ForbiddenConstraint> inspectors, PackageRepository packageRepository) throws Exception {
-        throw new Exception("TODO");
+    public FinalState inspection(List<ForbiddenConstraint> inspectors, PackageRepository packageRepository) throws Exception {
+        for(ForbiddenConstraint fc : inspectors) {
+            for (Package p : fc.packages) {
+                for (Package p2 : this.packages) {
+                    if (p.name.equals(p2.name)) return null;
+                }
+            }
+        }
+        return new FinalState(this.packages, this.history, this.priorityQ);
     }
 }

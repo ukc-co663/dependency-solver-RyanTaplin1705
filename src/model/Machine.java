@@ -35,12 +35,12 @@ public class Machine {
             else if (c instanceof ForbiddenConstraint) inspectors.add((ForbiddenConstraint)c);
             else throw new Exception("Constraint type did not match..");
         }
-        LinkedList<ValidState> validStates = processInstallations(installed);
+        LinkedList<ValidState> validStates = getValid(processInstallations(installed));
         LinkedList<FinalState> solutions = inspectSolutions(inspectors, validStates);
         return optimal(solutions); // if we have multiple solutions return the highest
     }
 
-    private LinkedList<ValidState> processInstallations(List<InstallConstraint> installed) throws Exception {
+    private LinkedList<State> processInstallations(List<InstallConstraint> installed) throws Exception {
         LinkedList<State> solutions = new LinkedList<>();
         for (InstallConstraint c : installed) {
             for (Package p : c.optional.packages) { //for every package in OptionalPackages
@@ -48,7 +48,7 @@ public class Machine {
                 solutions.addAll(s.addPackage(p, packageRepository));
             }
         }
-        return getValid(solutions);
+        return solutions;
     }
 
     private LinkedList<ValidState> getValid(LinkedList<State> states) {
@@ -65,7 +65,8 @@ public class Machine {
         //sweep in at the end with inspectors. try to uninstall forbidden constraints or reject
         LinkedList<FinalState> finals = new LinkedList<>();
         for(ValidState s : solutions) {
-            finals.addAll(s.inspection(inspectors, packageRepository));
+            FinalState fss = s.inspection(inspectors, packageRepository);
+            if (fss != null) finals.add(fss);
         }
         return finals;
     }
