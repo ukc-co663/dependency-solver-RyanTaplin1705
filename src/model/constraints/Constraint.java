@@ -12,7 +12,7 @@ public class Constraint {
 
         Operation op = extractOperator(raw);
         String name = op.equals(NONE) ? raw : raw.substring(0, raw.indexOf(op.getStringValue()));
-        String version = op.equals(NONE) ? null :  raw.substring(raw.indexOf(op.getStringValue()), raw.length());
+        String version = op.equals(NONE) ? null :  raw.substring(raw.indexOf(op.getStringValue()) + (op.equals(Operation.EQUAL_TO) ? 1 : 0), raw.length());
 
         return new ParsedConstraint(name, version, op);
     }

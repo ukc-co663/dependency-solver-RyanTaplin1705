@@ -14,7 +14,8 @@ public class RepositoryPackages {
     private LinkedList<Package> packages;
 
     public RepositoryPackages(LinkedList<Package> packages) {
-        this.packages = packages;
+        if (packages == null) this.packages = new LinkedList<>();
+        else this.packages = packages;
     }
 
     public Package ofVersion(String version) throws Exception {
