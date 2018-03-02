@@ -25,6 +25,7 @@ public class JSONConverter {
 
     public static List<ConflictPackages> parseConflicts(JSONArray json, PackageRepository packageRepository) throws Exception {
         LinkedList<ConflictPackages> result = new LinkedList<>();
+        if (json == null) return result;
         for (int j = 0; j < json.length(); j++) {
             ParsedConstraint pc = convertJSON(json.getString(j));
             result.add(new ConflictPackages(packageRepository.getDependency(pc.name).ofVersions(pc.op, pc.version)));
@@ -34,6 +35,7 @@ public class JSONConverter {
 
     public static List<OptionalPackages> parseDependants(JSONArray json, PackageRepository packageRepository) throws Exception {
         List<OptionalPackages> result = new ArrayList<>();
+        if (json == null) return result;
         for (int i = 0; i < json.length(); i++) {
             JSONArray choices = json.optJSONArray(i);
             if (choices != null) {
@@ -67,6 +69,8 @@ public class JSONConverter {
         } else if (s.contains("=")) {
             String[] p = s.split("=");
             return new ParsedConstraint(p[0], p[1], Operation.EQUAL_TO);
-        } else throw new Exception("Invalid conflict json parsed in.");
+        } else {
+            return new ParsedConstraint(s, null, Operation.NONE);
+        }
     }
 }

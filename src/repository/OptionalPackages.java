@@ -7,9 +7,9 @@ import repository.model.Package;
 import java.util.LinkedList;
 import java.util.List;
 
-public class OptionalPackages extends LinkedList<Package> {
+public class OptionalPackages {
 
-    private LinkedList<Package> packages;
+    public LinkedList<Package> packages;
 
     public OptionalPackages(LinkedList<Package> packages) {
         this.packages = packages;

@@ -47,8 +47,8 @@ public class Setup {
 
             for(Package p : packages.get(name)) {
                 if (p.version.equals(version)) {
-                    p.dependants = parseDependants(json, new PackageRepository(packages));
-                    p.conflicts = parseConflicts(json, new PackageRepository(packages));
+                    p.dependants = parseDependants(object.optJSONArray("depends"), new PackageRepository(packages));
+                    p.conflicts = parseConflicts(object.optJSONArray("conflicts"), new PackageRepository(packages));
                 }
             }
         }

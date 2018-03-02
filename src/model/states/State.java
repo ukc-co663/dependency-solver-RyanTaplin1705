@@ -67,18 +67,19 @@ public class State {
     // so I can quickly validate in removePackage if it will turn it into an InvalidState.
     public LinkedList<State> addPackage(Package p, PackageRepository packageRepository) throws Exception {
         LinkedList<State> result = new LinkedList<>();
-        if (result.isEmpty()) {
-            for (OptionalPackages d : p.dependants) {
-                result.addAll(
-                        d.getAllValid(this, packageRepository));
-            }
-        } else {
-            for (int i = 0; i < result.size(); i++) {
-                result.remove(i);
-                for (OptionalPackages d : p.dependants) {
-                    result.addAll(
-                            d.getAllValid(result.get(i).clone(), packageRepository));
+        for (OptionalPackages d : p.dependants) {
+            if (result.isEmpty()) {
+                for (Package p2 : d.packages) {
+                    result.addAll(this.clone().addPackage(p2, packageRepository));
                 }
+            } else {
+                LinkedList<State> tr = new LinkedList<>();
+                for (int i = 0; i < result.size(); i++) {
+                    for (Package p2 : d.packages) {
+                        tr.addAll(result.get(i).clone().addPackage(p2, packageRepository));
+                    }
+                }
+                result = tr;
             }
         }
 
@@ -98,9 +99,31 @@ public class State {
                 }
             }
         }
-        priorityQ.add(p);
-        history.add(new InstallInstruction(p.name, p.version, p.size));
+
+        if (result.isEmpty()) {
+            State clone = this.clone().addUpdate(p);
+            result.add(clone);
+        } else for (State s : result) {
+            s.addUpdate(p);
+        }
         return result;
+    }
+
+    private State addUpdate(Package p) throws Exception {
+        boolean validate = validate(p);
+        this.packages.add(p);
+        this.priorityQ.add(p);
+        this.history.add(new InstallInstruction(p.name, p.version, p.size));
+
+        if (validate) return new ValidState(this.packages, this.history, this.priorityQ);
+        else return new InvalidState(this.packages, this.history, this.priorityQ);
+    }
+
+    private boolean validate(Package p) {
+        for (Package p2 : priorityQ) {
+            if (p.name.equals(p2.name)) return false;
+        }
+        return true;
     }
 
     //When you need to remove a package
@@ -124,7 +147,7 @@ public class State {
     private LinkedList<Package> getDependents(Package p) {
         LinkedList<Package> result = new LinkedList<>();
             for (Package pk : packages) {
-                pk.dependants.forEach(op -> op.forEach(pk2 -> {
+                pk.dependants.forEach(op -> op.packages.forEach(pk2 -> {
                     if (pk2.name.equals(p.name)) result.add(pk);
                 }));
             }
@@ -150,7 +173,13 @@ public class State {
     }
 
     public State clone() {
-        return new State(this.packages, this.history, this.priorityQ);
+        LinkedList<Instruction> hist = new LinkedList<>();
+        hist.addAll(this.history);
+        LinkedList<Package> prior = new LinkedList<>();
+        prior.addAll(this.priorityQ);
+        LinkedList<Package> pack = new LinkedList<>();
+        pack.addAll(this.packages);
+        return new State(pack, hist, prior);
     }
 
     public boolean isValid() {

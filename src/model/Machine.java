@@ -43,7 +43,7 @@ public class Machine {
     private LinkedList<ValidState> processInstallations(List<InstallConstraint> installed) throws Exception {
         LinkedList<State> solutions = new LinkedList<>();
         for (InstallConstraint c : installed) {
-            for (Package p : c.packages) { //for every package in OptionalPackages
+            for (Package p : c.optional.packages) { //for every package in OptionalPackages
                 State s = state.clone();
                 solutions.addAll(s.addPackage(p, packageRepository));
             }

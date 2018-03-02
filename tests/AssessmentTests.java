@@ -9,7 +9,7 @@ import java.util.List;
 
 import static util.Setup.*;
 
-public class MainTest extends TestCase {
+public class AssessmentTests extends TestCase {
 
     private final String basePath = System.getProperty("user.dir") + "\\tests\\resources\\assessment";
 

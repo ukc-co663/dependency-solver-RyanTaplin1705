@@ -36,6 +36,5 @@ public class ValidState extends State implements Valid {
     @Override
     public List<FinalState> inspection(List<ForbiddenConstraint> inspectors, PackageRepository packageRepository) throws Exception {
         throw new Exception("TODO");
-//        return new ValidFinalState(null, null);
     }
 }
