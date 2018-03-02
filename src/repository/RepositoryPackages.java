@@ -32,7 +32,6 @@ public class RepositoryPackages {
                 result.add(p);
             }
         }
-        if (result.isEmpty()) throw new Exception("No packages {" + packages.getFirst().name + "} of version " + op.getStringValue() + " " + version);
-        else return result;
+        return result;
     }
 }
