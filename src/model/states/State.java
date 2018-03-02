@@ -110,6 +110,8 @@ public class State {
     }
 
     private State addUpdate(Package p) throws Exception {
+        if (isInstalled(p)) return new ValidState(this.packages, this.history, this.priorityQ);
+
         boolean validate = validate(p);
         this.packages.add(p);
         this.priorityQ.add(p);
@@ -189,5 +191,4 @@ public class State {
     public boolean isFinal() {
         return this instanceof Final;
     }
-
 }
