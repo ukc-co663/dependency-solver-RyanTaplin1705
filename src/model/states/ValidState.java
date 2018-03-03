@@ -6,6 +6,7 @@ import model.states.types.Valid;
 import repository.PackageRepository;
 import repository.model.Package;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,7 +39,9 @@ public class ValidState extends State implements Valid {
         for(ForbiddenConstraint fc : inspectors) {
             for (Package p : fc.packages) {
                 for (Package p2 : this.packages) {
-                    if (p.name.equals(p2.name)) return null;
+                    if (p.name.equals(p2.name))
+                        if (canUninstall(Arrays.asList(p))) this.removePackage(p, packageRepository);
+                        else return null;
                 }
             }
         }

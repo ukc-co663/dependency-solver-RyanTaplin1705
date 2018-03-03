@@ -40,9 +40,20 @@ public class State {
             //for every dependent, clone this state and uninstall
             //after first iteration, pick up the previous set and process next dependent on them individually.
             //repeat until all dependants complete.
+            LinkedList<State> tr = new LinkedList<>();
             for (Package d : dependants) {
-                removePackage(d, packageRepository);
+                if (tr.isEmpty()) tr.addAll(removePackage(d, packageRepository));
+                else {
+                    for (State s : tr) {
+                        s.removePackage(d, packageRepository);
+                    }
+                }
             }
+            result = tr;
+        }
+
+        for (State s : result) {
+            s.removePackage(p, packageRepository);
         }
         return result;
     }
@@ -52,12 +63,13 @@ public class State {
         if (priorityQ.stream().filter(qP -> qP.name.equals(p.name)).collect(Collectors.toList()).size() > 0)
             return new InvalidState(this.packages, this.history, this.priorityQ);
 
+        if (!isInstalled(p)) return this;
         for (int i = 0; i < this.packages.size(); i++) {
             Package pp = this.packages.get(i);
             if (pp.name.equals(p.name)) {
                 packages.remove(i);
-                history.add(new RemoveInstruction(packages.get(i).name, packages.get(i).version));
-                return new ValidState(this.packages, this.history, priorityQ);
+                history.add(new RemoveInstruction(pp.name, pp.version));
+                return new ValidState(this.packages, this.history, this.priorityQ);
             }
         }
         throw new Exception("The package you want to uninstall wasn't found.");
@@ -158,7 +170,7 @@ public class State {
 
     //not sure if this is right, if im correct all dependents should
     //be inside the priorityQ so won't need to dig in and check them indiv.
-    private boolean canUninstall(List<Package> pks) {
+    public boolean canUninstall(List<Package> pks) {
         for (Package up : pks) {
             for (Package p : priorityQ) {
                 if (p.name.equals(up.name)) return false;
@@ -167,7 +179,7 @@ public class State {
         return true;
     }
 
-    private boolean isInstalled(Package pk) {
+    public boolean isInstalled(Package pk) {
         for (Package p : packages) {
             if (p.name.equals(pk.name)) return true;
         }

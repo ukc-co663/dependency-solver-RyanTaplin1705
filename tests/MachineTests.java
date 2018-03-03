@@ -1,6 +1,6 @@
 import junit.framework.TestCase;
 import model.Machine;
-import model.constraints.Constraint;
+import model.constraints.ConstraintsPair;
 import model.constraints.ForbiddenConstraint;
 import model.constraints.InstallConstraint;
 import model.states.FinalState;
@@ -25,47 +25,45 @@ public class MachineTests extends TestCase {
     public void testCase0() throws Exception {
         CoreTestCase testCase = new CoreTestCase(0);
         Machine machine = testCase.createMachine();
-        List<Constraint> constraints = testCase.getConstraints();
-        FinalState state = machine.satisfyConstraints(constraints);
-        assertStateMatch(state, constraints);
+        ConstraintsPair constraints = testCase.getConstraints();
+        FinalState state = machine.satisfyConstraints(constraints.install, constraints.forbidden);
+        assertStateMatch(state, constraints.install, constraints.forbidden);
     }
 
     @Test
     public void testCase1() throws Exception {
         CoreTestCase testCase = new CoreTestCase(1);
         Machine machine = testCase.createMachine();
-        List<Constraint> constraints = testCase.getConstraints();
-        FinalState state = machine.satisfyConstraints(constraints);
-        assertStateMatch(state, constraints);
+        ConstraintsPair constraints = testCase.getConstraints();
+        FinalState state = machine.satisfyConstraints(constraints.install, constraints.forbidden);
+        assertStateMatch(state, constraints.install, constraints.forbidden);
     }
 
-    private void assertStateMatch(State ans,  List<Constraint> constraints) {
-        for (Constraint c : constraints) {
-            if (c instanceof  InstallConstraint) {
-                InstallConstraint c1 = (InstallConstraint) c;
-                for (Package p : c1.optional.packages) {
-                    boolean f = false;
-                    for (Package p2 : ans.packages) {
-                        if (p.name.equals(p2.name)) {
-                            f = true;
-                            break;
-                        }
+    private void assertStateMatch(State ans,  List<InstallConstraint> ics, List<ForbiddenConstraint> fcs) {
+        for(InstallConstraint ic : ics) {
+            for (Package p : ic.optional.packages) {
+                boolean f = false;
+                for (Package p2 : ans.packages) {
+                    if (p.name.equals(p2.name)) {
+                        f = true;
+                        break;
                     }
-                    if (!f) Assert.fail("Missing constraint installation.");
                 }
-            } else if (c instanceof ForbiddenConstraint) {
-                ForbiddenConstraint c1 = (ForbiddenConstraint) c;
-                for (Package p : ans.packages) {
-                    boolean f = false;
-                    for (Package p2 : c1.packages) {
-                        if (p.name.equals(p2.name)) {
-                            f = true;
-                            break;
-                        }
+                if (!f) Assert.fail("Missing constraint installation.");
+            }
+        }
+
+        for (ForbiddenConstraint fc : fcs) {
+            for (Package p : ans.packages) {
+                boolean f = false;
+                for (Package p2 : fc.packages) {
+                    if (p.name.equals(p2.name)) {
+                        f = true;
+                        break;
                     }
-                    if (f) Assert.fail("A forbidden constraint found in final solution.");
                 }
-            } else Assert.fail("Invalid constraint type...");
+                if (f) Assert.fail("A forbidden constraint found in final solution.");
+            }
         }
         assertTrue("Constraints and state match. May not be valid.", true);
     }

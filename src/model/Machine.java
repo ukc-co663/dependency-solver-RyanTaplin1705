@@ -1,6 +1,5 @@
 package model;
 
-import model.constraints.Constraint;
 import model.constraints.ForbiddenConstraint;
 import model.constraints.InstallConstraint;
 import model.states.FinalState;
@@ -26,15 +25,7 @@ public class Machine {
         return new Machine(state, repository);
     }
 
-    public FinalState satisfyConstraints(List<Constraint> constraints) throws Exception {
-        List<InstallConstraint> installed = new LinkedList<>();
-        List<ForbiddenConstraint> inspectors = new LinkedList<>();
-
-        for (Constraint c : constraints) {
-            if (c instanceof InstallConstraint) installed.add((InstallConstraint)c);
-            else if (c instanceof ForbiddenConstraint) inspectors.add((ForbiddenConstraint)c);
-            else throw new Exception("Constraint type did not match..");
-        }
+    public FinalState satisfyConstraints(List<InstallConstraint> installed, List<ForbiddenConstraint> inspectors) throws Exception {
         LinkedList<ValidState> validStates = getValid(processInstallations(installed));
         LinkedList<FinalState> solutions = inspectSolutions(inspectors, validStates);
         return optimal(solutions); // if we have multiple solutions return the highest
@@ -44,8 +35,16 @@ public class Machine {
         LinkedList<State> solutions = new LinkedList<>();
         for (InstallConstraint c : installed) {
             for (Package p : c.optional.packages) { //for every package in OptionalPackages
-                State s = state.clone();
-                solutions.addAll(s.addPackage(p, packageRepository));
+                if (solutions.isEmpty()) {
+                    State s = state.clone();
+                    solutions.addAll(s.addPackage(p, packageRepository));
+                } else {
+                    LinkedList<State> tr = new LinkedList<>();
+                    for (State s : solutions) {
+                        tr.addAll(s.addPackage(p, packageRepository));
+                    }
+                    solutions = tr;
+                }
             }
         }
         return solutions;

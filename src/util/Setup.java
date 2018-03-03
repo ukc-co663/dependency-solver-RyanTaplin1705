@@ -1,9 +1,7 @@
 package util;
 
-import model.constraints.Constraint;
-import model.constraints.ForbiddenConstraint;
-import model.constraints.InstallConstraint;
-import model.constraints.ParsedConstraint;
+import model.constraints.*;
+import model.states.State;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import repository.OptionalPackages;
@@ -13,6 +11,7 @@ import repository.model.Package;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import static util.FileReader.readFile;
 import static util.JSONConverter.parseConflicts;
@@ -55,20 +54,37 @@ public class Setup {
         return packages;
     }
 
-    public static LinkedList<Package> readInitial(String filePath, PackageRepository dr) throws Exception {
+    public static State createState(String filepath, PackageRepository repository, List<ForbiddenConstraint> forbiddens) throws Exception {
+        LinkedList<State> initStates = new LinkedList<>();
+        State state = new State(readInitial(filepath, repository));
+        for (ForbiddenConstraint fc : forbiddens) {
+            for (Package fp : fc.packages) {
+                if (state.isInstalled(fp))
+                    if (initStates.isEmpty()) initStates.addAll(state.removePackage(fp, repository));
+                    else {
+                        for (State s : initStates) {
+                            s.removePackage(fp, repository);
+                        }
+                    }
+            }
+        }
+        return state;
+    }
+
+    private static LinkedList<Package> readInitial(String filePath, PackageRepository repository) throws Exception {
         JSONArray json = new JSONArray(readFile(filePath));
         LinkedList<Package> initialState = new LinkedList<>(); // needs populating from .json files
         for (int i = 0; i < json.length(); i++) {
             String input = json.getString(i);
             initialState.add(
-                    dr.getDependency(extractNameFromString(input))
+                    repository.getDependency(extractNameFromString(input))
                             .ofVersion(extractVersionFromString(input))
             );
         }
         return initialState;
     }
 
-    public static LinkedList<Constraint> readConstraints(String filePath, PackageRepository repository) throws Exception {
+    public static ConstraintsPair readConstraints(String filePath, PackageRepository repository) throws Exception {
         JSONArray json = new JSONArray(readFile(filePath));
         LinkedList<Constraint> constraints = new LinkedList<>();
         for (int i = 0; i < json.length(); i++) {
@@ -82,7 +98,7 @@ public class Setup {
                 constraints.add(new ForbiddenConstraint(p));
             } else throw new Exception("Constraint format is not recognised.");
         }
-        return constraints;
+        return new ConstraintsPair(constraints);
     }
 
     private static <T> LinkedList<T> genericArrayAdd(LinkedList<T> list, T result) {

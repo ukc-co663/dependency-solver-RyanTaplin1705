@@ -1,11 +1,8 @@
 import junit.framework.TestCase;
 import model.Machine;
-import model.constraints.Constraint;
-import model.states.State;
+import model.constraints.ConstraintsPair;
 import org.junit.Test;
 import repository.PackageRepository;
-
-import java.util.List;
 
 import static util.Setup.*;
 
@@ -16,8 +13,8 @@ public class AssessmentTests extends TestCase {
     public void runTest(int testNum) throws Exception {
         String fullPath = basePath + "\\seen-" + testNum + "\\";
         PackageRepository repo = new PackageRepository(readRepository(fullPath + "repository.json"));
-        List<Constraint> constraints = readConstraints(fullPath + "constraints.json", repo);
-        Main.start(Machine.create(new State(readInitial(fullPath + "initial.json", repo)), repo), constraints);
+        ConstraintsPair constraints = readConstraints(fullPath + "constraints.json", repo);
+        Main.start(Machine.create(createState(fullPath + "initial.json", repo, constraints.forbidden), repo), constraints.install, constraints.forbidden);
     }
 
     @Test
