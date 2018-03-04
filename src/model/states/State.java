@@ -31,7 +31,7 @@ public class State {
         this.history = history;
     }
 
-    public LinkedList<State> removePackage(Package p, PackageRepository packageRepository) throws Exception {
+    public LinkedList<State> removePackage2(Package p, PackageRepository packageRepository) throws Exception {
         LinkedList<State> results = new LinkedList<>();
         LinkedList<OptionalPackages> deps = getDeps(p);
         while(!deps.isEmpty()) {
@@ -52,7 +52,7 @@ public class State {
         return results;
     }
 
-    public LinkedList<State> removePackage2(Package p, PackageRepository packageRepository) throws Exception {
+    public LinkedList<State> removePackage(Package p, PackageRepository packageRepository) throws Exception {
         LinkedList<State> result = new LinkedList<>();
         List<Package> dependants = getDependents(p);
         if (dependants.isEmpty()) result.add(deletePackage(p));

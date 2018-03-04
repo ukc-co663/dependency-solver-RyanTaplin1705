@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 import static util.Setup.*;
 
-public class CoreTestCase {
+public class AssessmentTestCase {
 
     private final int num;
     private final PackageRepository repository;
@@ -17,10 +17,10 @@ public class CoreTestCase {
     private final ConstraintsPair constraints;
     private final State solution;
 
-    public CoreTestCase(int num) throws Exception {
+    public AssessmentTestCase(int num) throws Exception {
         this.num = num;
 
-        String path = System.getProperty("user.dir") + "//tests//resources//core//testcase-" + num + "//";
+        String path = System.getProperty("user.dir") + "//tests//resources//assessment//seen-" + num + "//";
         this.repository = new PackageRepository(readRepository(path + "repository.json"));
         this.constraints = readConstraints(path + "constraints.json", repository);
         this.initialState = createState(path + "initial.json", repository, constraints.forbidden);
