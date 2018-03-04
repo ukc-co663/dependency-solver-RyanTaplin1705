@@ -31,28 +31,30 @@ public class State {
         this.history = history;
     }
 
-    public LinkedList<State> removePackage2(Package p, PackageRepository packageRepository) throws Exception {
+    public LinkedList<State> removePackage(Package p, PackageRepository packageRepository) throws Exception {
         LinkedList<State> results = new LinkedList<>();
         LinkedList<OptionalPackages> deps = getDeps(p);
-        while(!deps.isEmpty()) {
-            OptionalPackages op = deps.pollLast();
-            for (Package pk : op.packages) {
-                if (results.isEmpty()) {
-                    results.add(this.clone().deletePackage(pk));
-                } else {
-                    LinkedList<State> tr = new LinkedList<>();
-                    for (int i = 0; i < results.size(); i++) {
-                        tr.add(results.get(i).clone().deletePackage(pk));
+        if (!deps.isEmpty()) {
+            while(!deps.isEmpty()) {
+                OptionalPackages op = deps.pollLast();
+                for (Package pk : op.packages) {
+                    if (results.isEmpty()) {
+                        results.add(this.clone().deletePackage(pk));
+                    } else {
+                        LinkedList<State> tr = new LinkedList<>();
+                        for (int i = 0; i < results.size(); i++) {
+                            tr.add(results.get(i).clone().deletePackage(pk));
+                        }
+                        results = tr;
                     }
-                    results = tr;
                 }
             }
-        }
-        for (State state : results) state.deletePackage(p);
+            for (State state : results) state.deletePackage(p);
+        } else results.add(this);
         return results;
     }
 
-    public LinkedList<State> removePackage(Package p, PackageRepository packageRepository) throws Exception {
+    public LinkedList<State> removePackage2(Package p, PackageRepository packageRepository) throws Exception {
         LinkedList<State> result = new LinkedList<>();
         List<Package> dependants = getDependents(p);
         if (dependants.isEmpty()) result.add(deletePackage(p));

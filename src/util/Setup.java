@@ -55,33 +55,31 @@ public class Setup {
     }
 
     public static State createState(String filepath, PackageRepository repository, List<ForbiddenConstraint> forbiddens) throws Exception {
-        LinkedList<State> initStates = new LinkedList<>();
-        State state = new State(readInitial(filepath, repository));
-        for (ForbiddenConstraint fc : forbiddens) {
-            for (Package fp : fc.packages) {
-                if (state.isInstalled(fp))
-                    if (initStates.isEmpty()) initStates.addAll(state.removePackage(fp, repository));
-                    else {
-                        for (State s : initStates) {
-                            s.removePackage(fp, repository);
-                        }
-                    }
-            }
-        }
-        return state;
+        return new State(readInitial(filepath, repository, forbiddens));
     }
 
-    private static LinkedList<Package> readInitial(String filePath, PackageRepository repository) throws Exception {
+    private static LinkedList<Package> readInitial(String filePath, PackageRepository repository, List<ForbiddenConstraint> forbiddens) throws Exception {
         JSONArray json = new JSONArray(readFile(filePath));
         LinkedList<Package> initialState = new LinkedList<>(); // needs populating from .json files
         for (int i = 0; i < json.length(); i++) {
             String input = json.getString(i);
-            initialState.add(
-                    repository.getDependency(extractNameFromString(input))
-                            .ofVersion(extractVersionFromString(input))
-            );
+            Package aPackage = repository.getDependency(extractNameFromString(input))
+                    .ofVersion(extractVersionFromString(input));
+
+            if (!isForbidden(forbiddens, aPackage)) initialState.add(aPackage);
         }
+
+
         return initialState;
+    }
+
+    private static boolean isForbidden(List<ForbiddenConstraint> forbiddens, Package aPackage) {
+        for (ForbiddenConstraint fc : forbiddens) {
+            for (Package fp : fc.packages) {
+                if (aPackage.name.equals(fp.name)) return true;
+            }
+        }
+        return false;
     }
 
     public static ConstraintsPair readConstraints(String filePath, PackageRepository repository) throws Exception {
