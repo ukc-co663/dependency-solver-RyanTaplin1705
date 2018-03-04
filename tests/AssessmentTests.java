@@ -8,10 +8,10 @@ import static util.Setup.*;
 
 public class AssessmentTests extends TestCase {
 
-    private final String basePath = System.getProperty("user.dir") + "\\tests\\resources\\assessment";
+    private final String basePath = System.getProperty("user.dir") + "//tests//resources//assessment";
 
     public void runTest(int testNum) throws Exception {
-        String fullPath = basePath + "\\seen-" + testNum + "\\";
+        String fullPath = basePath + "//seen-" + testNum + "//";
         PackageRepository repo = new PackageRepository(readRepository(fullPath + "repository.json"));
         ConstraintsPair constraints = readConstraints(fullPath + "constraints.json", repo);
         Main.start(Machine.create(createState(fullPath + "initial.json", repo, constraints.forbidden), repo), constraints.install, constraints.forbidden);
