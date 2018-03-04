@@ -40,7 +40,7 @@ public class ValidState extends State implements Valid {
             for (Package p : fc.packages) {
                 for (Package p2 : this.packages) {
                     if (p.name.equals(p2.name))
-                        if (canUninstall(Arrays.asList(p))) this.removePackage(p, packageRepository);
+                        if (canUninstall(Arrays.asList(p))) this.removePackage(p);
                         else return null;
                 }
             }

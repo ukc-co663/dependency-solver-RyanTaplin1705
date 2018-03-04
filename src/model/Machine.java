@@ -34,14 +34,16 @@ public class Machine {
     private LinkedList<State> processInstallations(List<InstallConstraint> installed) throws Exception {
         LinkedList<State> solutions = new LinkedList<>();
         for (InstallConstraint c : installed) {
+            LinkedList<State> ts = new LinkedList<>();
             for (Package p : c.optional.packages) { //for every package in OptionalPackages
-                    LinkedList<State> ts = new LinkedList<>();
-                    if(solutions.isEmpty()) solutions.addAll(state.clone().addPackage(p, packageRepository));
-                    for(State s : solutions) {
-                        ts.addAll(s.clone().addPackage(p, packageRepository));
+                    if(solutions.isEmpty()) ts.addAll(state.clone().addPackage(p));
+                    else {
+                        for(State s : solutions) {
+                            ts.addAll(s.clone().addPackage(p));
+                        }
                     }
-                    solutions = ts;
             }
+            solutions = ts;
         }
         return solutions;
     }

@@ -4,6 +4,9 @@
     <list default="true" id="ceeaebcc-cbdd-4ee1-9cc5-c237ff62c6c7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Machine.java" afterPath="$PROJECT_DIR$/src/model/Machine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/states/State.java" afterPath="$PROJECT_DIR$/src/model/states/State.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/states/ValidState.java" afterPath="$PROJECT_DIR$/src/model/states/ValidState.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/repository/OptionalPackages.java" afterPath="$PROJECT_DIR$/src/repository/OptionalPackages.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/AssessmentTests.java" afterPath="$PROJECT_DIR$/tests/AssessmentTests.java" />
     </list>
     <ignored path="dependency-solver-RyanTaplin1705.iws" />
@@ -30,8 +33,8 @@
       <file leaf-file-name="AssessmentTests.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/AssessmentTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="602">
-              <caret line="111" column="49" selection-start-line="111" selection-start-column="49" selection-end-line="111" selection-end-column="49" />
+            <state relative-caret-position="986">
+              <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -51,11 +54,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="repository.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/resources/assessment/seen-5/repository.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="23" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="ValidState.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/states/ValidState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+            <state relative-caret-position="306">
+              <caret line="42" column="80" selection-start-line="42" selection-start-column="80" selection-end-line="42" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -64,8 +77,8 @@
       <file leaf-file-name="State.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/states/State.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="271" column="0" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
+            <state relative-caret-position="223">
+              <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -153,14 +166,14 @@
         <option value="$PROJECT_DIR$/tests/resources/assessment/seen-2/repository.json" />
         <option value="$PROJECT_DIR$/src/model/constraints/ConstraintsPair.java" />
         <option value="$PROJECT_DIR$/tests/MachineTests.java" />
-        <option value="$PROJECT_DIR$/src/model/states/ValidState.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/tests/util/CoreTestCase.java" />
         <option value="$PROJECT_DIR$/src/util/Setup.java" />
-        <option value="$PROJECT_DIR$/src/repository/OptionalPackages.java" />
+        <option value="$PROJECT_DIR$/src/model/states/ValidState.java" />
         <option value="$PROJECT_DIR$/src/model/states/State.java" />
-        <option value="$PROJECT_DIR$/src/model/Machine.java" />
+        <option value="$PROJECT_DIR$/src/repository/OptionalPackages.java" />
         <option value="$PROJECT_DIR$/tests/AssessmentTests.java" />
+        <option value="$PROJECT_DIR$/src/model/Machine.java" />
       </list>
     </option>
   </component>
@@ -264,32 +277,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dependency-solver-RyanTaplin1705" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dependency-solver-RyanTaplin1705" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assessment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="seen-9" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1175,8 +1162,8 @@
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="JUnit.AssessmentTests" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testNine" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testFive" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testFive" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testNine" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testZero" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testTwo" />
       </list>
@@ -1214,7 +1201,7 @@
       <workItem from="1520009614465" duration="11704000" />
       <workItem from="1520162333162" duration="2097000" />
       <workItem from="1520179904709" duration="66000" />
-      <workItem from="1520180014644" duration="2278000" />
+      <workItem from="1520180014644" duration="3465000" />
     </task>
     <task id="LOCAL-00001" summary="Clean up from previous clone, started to do some further work on data structure.">
       <created>1517670027131</created>
@@ -1482,43 +1469,50 @@
       <option name="project" value="LOCAL" />
       <updated>1520181332013</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Fixed some tests.">
+      <created>1520182308778</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1520182308778</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AssessmentTests - 2018.03.04 at 16h 33m 42s.xml">
+    <history-entry file="AssessmentTests - 2018.03.04 at 16h 57m 26s.xml">
       <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests - 2018.03.04 at 16h 45m 14s.xml">
+    <history-entry file="AssessmentTests - 2018.03.04 at 17h 01m 51s.xml">
       <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests - 2018.03.04 at 16h 50m 34s.xml">
+    <history-entry file="AssessmentTests - 2018.03.04 at 17h 02m 49s.xml">
       <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests - 2018.03.04 at 16h 51m 25s.xml">
+    <history-entry file="AssessmentTests - 2018.03.04 at 17h 10m 18s.xml">
       <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 36m 15s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 17h 03m 20s.xml">
+      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 41m 39s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 17h 07m 31s.xml">
+      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 42m 08s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 17h 07m 36s.xml">
+      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 42m 47s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 17h 07m 40s.xml">
+      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 44m 03s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 17h 09m 43s.xml">
+      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 44m 26s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 17h 09m 54s.xml">
+      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132479000" />
+    <option name="totallyTimeSpent" value="133666000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1652,12 +1646,6 @@
           <option name="timeStamp" value="268" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
-          <line>45</line>
-          <properties />
-          <option name="timeStamp" value="272" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Main.java</url>
           <line>18</line>
           <properties />
@@ -1665,15 +1653,9 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
-          <line>65</line>
+          <line>67</line>
           <properties />
           <option name="timeStamp" value="278" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/states/State.java</url>
-          <line>100</line>
-          <properties />
-          <option name="timeStamp" value="287" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/util/Setup.java</url>
@@ -1700,34 +1682,45 @@
           <option name="timeStamp" value="304" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/states/State.java</url>
-          <line>102</line>
-          <properties />
-          <option name="timeStamp" value="305" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/tests/AssessmentTests.java</url>
           <line>100</line>
           <properties />
           <option name="timeStamp" value="306" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/tests/AssessmentTests.java</url>
+          <line>91</line>
+          <properties />
+          <option name="timeStamp" value="316" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/tests/AssessmentTests.java</url>
+          <line>105</line>
+          <properties />
+          <option name="timeStamp" value="317" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/tests/AssessmentTests.java</url>
+          <line>64</line>
+          <properties />
+          <option name="timeStamp" value="318" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
+          <line>47</line>
+          <properties />
+          <option name="timeStamp" value="320" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="316" />
+      <option name="time" value="321" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="JUnit">
-        <watch expression="result" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/model/states/InvalidFinalState.java" />
-    <entry file="file://$PROJECT_DIR$/src/model/states/ValidFinalState.java" />
-    <entry file="file://$PROJECT_DIR$/src/model/states/SolutionState.java" />
     <entry file="file://$PROJECT_DIR$/src/model/states/types/Final.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -2028,26 +2021,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/repository/OptionalPackages.java">
+    <entry file="file://$PROJECT_DIR$/src/model/states/ValidState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+        <state relative-caret-position="306">
+          <caret line="42" column="80" selection-start-line="42" selection-start-column="80" selection-end-line="42" selection-end-column="80" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/states/ValidState.java">
+    <entry file="file://$PROJECT_DIR$/src/repository/OptionalPackages.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+        <state relative-caret-position="221">
+          <caret line="20" column="70" selection-start-line="20" selection-start-column="70" selection-end-line="20" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/resources/assessment/seen-5/initial.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/resources/assessment/seen-5/constraints.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/resources/assessment/seen-5/repository.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="23" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/states/State.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="271" column="0" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
+        <state relative-caret-position="223">
+          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2064,8 +2081,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/AssessmentTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="111" column="49" selection-start-line="111" selection-start-column="49" selection-end-line="111" selection-end-column="49" />
+        <state relative-caret-position="986">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
