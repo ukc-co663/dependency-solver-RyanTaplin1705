@@ -124,36 +124,36 @@ public class State {
 
     public LinkedList<State> addPackage(Package p, PackageRepository packageRepository) throws Exception {
         LinkedList<State> results = new LinkedList<>();
-        LinkedList<OptionalPackages> deps = getDeps(p);
-        while(!deps.isEmpty()) {
-            OptionalPackages op = deps.pollLast();
-            for (Package pk : op.packages) {
-                if (results.isEmpty()) {
-                    results.add(this.clone().addUpdate(pk));
-                } else {
-                    LinkedList<State> tr = new LinkedList<>();
-                    for (int i = 0; i < results.size(); i++) {
-                        tr.add(results.get(i).clone().addUpdate(pk));
-                    }
-                    results = tr;
-                }
-            }
-        }
-//        for (OptionalPackages d : p.dependants) {
-//            if (results.isEmpty()) {
-//                for (Package p2 : d.packages) {
-//                    results.addAll(this.clone().addPackage(p2, packageRepository));
-//                }
-//            } else {
-//                LinkedList<State> tr = new LinkedList<>();
-//                for (int i = 0; i < results.size(); i++) {
-//                    for (Package p2 : d.packages) {
-//                        tr.addAll(results.get(i).clone().addPackage(p2, packageRepository));
+//        LinkedList<OptionalPackages> deps = getDeps(p);
+//        while(!deps.isEmpty()) {
+//            OptionalPackages op = deps.pollLast();
+//            for (Package pk : op.packages) {
+//                if (results.isEmpty()) {
+//                    results.add(this.clone().addUpdate(pk));
+//                } else {
+//                    LinkedList<State> tr = new LinkedList<>();
+//                    for (int i = 0; i < results.size(); i++) {
+//                        tr.add(results.get(i).clone().addUpdate(pk));
 //                    }
+//                    results = tr;
 //                }
-//                results = tr;
 //            }
 //        }
+        for (OptionalPackages d : p.dependants) {
+            if (results.isEmpty()) {
+                for (Package p2 : d.packages) {
+                    results.addAll(this.clone().addPackage(p2, packageRepository));
+                }
+            } else {
+                LinkedList<State> tr = new LinkedList<>();
+                for (int i = 0; i < results.size(); i++) {
+                    for (Package p2 : d.packages) {
+                        tr.addAll(results.get(i).clone().addPackage(p2, packageRepository));
+                    }
+                }
+                results = tr;
+            }
+        }
 
         for (State s : results) {
             for(ConflictPackages cps : p.conflicts) {
