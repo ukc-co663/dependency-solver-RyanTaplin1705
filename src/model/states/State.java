@@ -102,7 +102,7 @@ public class State {
     // so I can quickly validate in removePackage if it will turn it into an InvalidState.
 
     public LinkedList<OptionalPackages> getDeps(Package p) throws Exception {
-        if (!p.dependants.isEmpty()) return new LinkedList<>();
+        if (p.dependants.isEmpty()) return new LinkedList<>();
         else {
             LinkedList<OptionalPackages> processed = new LinkedList<>();
             LinkedList<OptionalPackages> unprocessed = new LinkedList<>();
