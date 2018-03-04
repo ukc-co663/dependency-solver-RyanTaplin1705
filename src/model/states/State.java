@@ -32,6 +32,27 @@ public class State {
     }
 
     public LinkedList<State> removePackage(Package p, PackageRepository packageRepository) throws Exception {
+        LinkedList<State> results = new LinkedList<>();
+        LinkedList<OptionalPackages> deps = getDeps(p);
+        while(!deps.isEmpty()) {
+            OptionalPackages op = deps.pollLast();
+            for (Package pk : op.packages) {
+                if (results.isEmpty()) {
+                    results.add(this.clone().deletePackage(pk));
+                } else {
+                    LinkedList<State> tr = new LinkedList<>();
+                    for (int i = 0; i < results.size(); i++) {
+                        tr.add(results.get(i).clone().deletePackage(pk));
+                    }
+                    results = tr;
+                }
+            }
+        }
+        for (State state : results) state.deletePackage(p);
+        return results;
+    }
+
+    public LinkedList<State> removePackage2(Package p, PackageRepository packageRepository) throws Exception {
         LinkedList<State> result = new LinkedList<>();
         List<Package> dependants = getDependents(p);
         if (dependants.isEmpty()) result.add(deletePackage(p));
