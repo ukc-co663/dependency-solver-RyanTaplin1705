@@ -18,7 +18,7 @@ public class OptionalPackages {
     public List<ValidState> getAllValid(State state, PackageRepository repository) throws Exception {
         LinkedList<ValidState> result = new LinkedList<>();
         for(Package p : packages) {
-            LinkedList<State> clones = state.clone().addPackage(p, repository);
+            LinkedList<ValidState> clones = state.clone().addPackage(p, repository);
             for (State s : clones) {
                 if (s.isValid()) result.add((ValidState)s);
             }

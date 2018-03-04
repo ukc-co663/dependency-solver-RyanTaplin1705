@@ -35,16 +35,8 @@ public class Machine {
         LinkedList<State> solutions = new LinkedList<>();
         for (InstallConstraint c : installed) {
             for (Package p : c.optional.packages) { //for every package in OptionalPackages
-                if (solutions.isEmpty()) {
                     State s = state.clone();
                     solutions.addAll(s.addPackage(p, packageRepository));
-                } else {
-                    LinkedList<State> tr = new LinkedList<>();
-                    for (State s : solutions) {
-                        tr.addAll(s.addPackage(p, packageRepository));
-                    }
-                    solutions = tr;
-                }
             }
         }
         return solutions;

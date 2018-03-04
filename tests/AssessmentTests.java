@@ -1,20 +1,14 @@
 import junit.framework.TestCase;
-import model.Machine;
 import model.constraints.ConstraintsPair;
 import model.constraints.ForbiddenConstraint;
 import model.constraints.InstallConstraint;
 import model.states.FinalState;
-import model.states.State;
 import org.junit.Assert;
 import org.junit.Test;
-import repository.PackageRepository;
 import repository.model.Package;
 import util.AssessmentTestCase;
-import util.CoreTestCase;
 
 import java.util.List;
-
-import static util.Setup.*;
 
 public class AssessmentTests extends TestCase {
 
@@ -100,6 +94,7 @@ public class AssessmentTests extends TestCase {
 
     private void assertStateMatch(FinalState ans, List<InstallConstraint> ics, List<ForbiddenConstraint> fcs) throws Exception {
         ans.printResults();
+        System.out.println("COST: " + ans.cost());
         for(InstallConstraint ic : ics) {
             for (Package p : ic.optional.packages) {
                 boolean f = false;

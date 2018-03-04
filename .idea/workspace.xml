@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ceeaebcc-cbdd-4ee1-9cc5-c237ff62c6c7" name="Default" comment="Changes to fix solution pool returning no states. Now runs into stack overflow seen-9.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Machine.java" afterPath="$PROJECT_DIR$/src/model/Machine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/states/State.java" afterPath="$PROJECT_DIR$/src/model/states/State.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/repository/OptionalPackages.java" afterPath="$PROJECT_DIR$/src/repository/OptionalPackages.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/AssessmentTests.java" afterPath="$PROJECT_DIR$/tests/AssessmentTests.java" />
     </list>
     <ignored path="dependency-solver-RyanTaplin1705.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,11 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AssessmentTests.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AssessmentTests.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/AssessmentTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-34">
-              <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+            <state relative-caret-position="1530">
+              <caret line="96" column="50" selection-start-line="96" selection-start-column="50" selection-end-line="96" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -37,11 +41,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="State.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Machine.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/Machine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ValidState.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/states/ValidState.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="124">
+              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="State.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/model/states/State.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="33" column="89" selection-start-line="33" selection-start-column="89" selection-end-line="33" selection-end-column="89" />
+            <state relative-caret-position="136">
+              <caret line="271" column="0" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -50,9 +76,11 @@
       <file leaf-file-name="Setup.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/util/Setup.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="816">
+            <state relative-caret-position="782">
               <caret line="65" column="38" selection-start-line="65" selection-start-column="38" selection-end-line="65" selection-end-column="38" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -120,7 +148,6 @@
         <option value="$PROJECT_DIR$/src/util/VersionChecker.java" />
         <option value="$PROJECT_DIR$/src/repository/ConflictPackages.java" />
         <option value="$PROJECT_DIR$/src/model/constraints/InstallConstraint.java" />
-        <option value="$PROJECT_DIR$/src/repository/OptionalPackages.java" />
         <option value="$PROJECT_DIR$/tests/resources/core/testcase-1/constraints.json" />
         <option value="$PROJECT_DIR$/src/repository/PackageRepository.java" />
         <option value="$PROJECT_DIR$/src/model/constraints/Constraint.java" />
@@ -128,12 +155,13 @@
         <option value="$PROJECT_DIR$/tests/resources/assessment/seen-2/repository.json" />
         <option value="$PROJECT_DIR$/src/model/constraints/ConstraintsPair.java" />
         <option value="$PROJECT_DIR$/tests/MachineTests.java" />
-        <option value="$PROJECT_DIR$/src/model/Machine.java" />
         <option value="$PROJECT_DIR$/src/model/states/ValidState.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/tests/util/CoreTestCase.java" />
-        <option value="$PROJECT_DIR$/tests/AssessmentTests.java" />
         <option value="$PROJECT_DIR$/src/util/Setup.java" />
+        <option value="$PROJECT_DIR$/tests/AssessmentTests.java" />
+        <option value="$PROJECT_DIR$/src/model/Machine.java" />
+        <option value="$PROJECT_DIR$/src/repository/OptionalPackages.java" />
         <option value="$PROJECT_DIR$/src/model/states/State.java" />
       </list>
     </option>
@@ -190,6 +218,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -298,6 +327,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assessment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="seen-5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dependency-solver-RyanTaplin1705" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dependency-solver-RyanTaplin1705" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -345,7 +400,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -393,7 +447,7 @@
       <recent name="C:\Users\RYAN\IdeaProjects\dependency-solver-RyanTaplin1705\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.AssessmentTests.testZero">
+  <component name="RunManager" selected="JUnit.AssessmentTests">
     <configuration default="false" name="AssessmentTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="dependency-solver-RyanTaplin1705" />
@@ -403,27 +457,6 @@
       <option name="MAIN_CLASS_NAME" value="AssessmentTests" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="false" name="AssessmentTests.testOne" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="dependency-solver-RyanTaplin1705" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="AssessmentTests" />
-      <option name="METHOD_NAME" value="testOne" />
-      <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -486,6 +519,27 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="AssessmentTests" />
       <option name="METHOD_NAME" value="testZero" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="AssessmentTests.testFive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="dependency-solver-RyanTaplin1705" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="AssessmentTests" />
+      <option name="METHOD_NAME" value="testFive" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -1115,18 +1169,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JUnit.AssessmentTests" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testOne" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testTwo" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testNine" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testZero" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testTwo" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testNine" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testZero" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testFive" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testZero" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.AssessmentTests" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testNine" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testTwo" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testOne" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.AssessmentTests" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testFive" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testZero" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testNine" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testTwo" />
       </list>
     </recent_temporary>
   </component>
@@ -1162,6 +1216,7 @@
       <workItem from="1520009614465" duration="11704000" />
       <workItem from="1520162333162" duration="2097000" />
       <workItem from="1520179904709" duration="66000" />
+      <workItem from="1520180014644" duration="1297000" />
     </task>
     <task id="LOCAL-00001" summary="Clean up from previous clone, started to do some further work on data structure.">
       <created>1517670027131</created>
@@ -1426,39 +1481,39 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AssessmentTests - 2018.03.03 at 00h 11m 58s.xml">
+    <history-entry file="AssessmentTests - 2018.03.04 at 16h 31m 05s.xml">
       <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests - 2018.03.03 at 00h 12m 34s.xml">
+    <history-entry file="AssessmentTests - 2018.03.04 at 16h 32m 08s.xml">
       <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests - 2018.03.04 at 11h 45m 32s.xml">
+    <history-entry file="AssessmentTests - 2018.03.04 at 16h 33m 42s.xml">
       <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests - 2018.03.04 at 11h 53m 06s.xml">
-      <configuration name="AssessmentTests" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 16h 31m 52s.xml">
+      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.02 at 23h 54m 52s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 16h 32m 08s.xml">
+      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.02 at 23h 55m 06s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 16h 33m 03s.xml">
+      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.02 at 23h 56m 22s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 16h 33m 08s.xml">
+      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.03 at 00h 02m 05s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testZero - 2018.03.04 at 16h 21m 20s.xml">
+      <configuration name="AssessmentTests.testZero" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.03 at 00h 02m 09s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testZero - 2018.03.04 at 16h 29m 38s.xml">
+      <configuration name="AssessmentTests.testZero" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testNine - 2018.03.03 at 00h 08m 59s.xml">
-      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testZero - 2018.03.04 at 16h 30m 42s.xml">
+      <configuration name="AssessmentTests.testZero" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130201000" />
+    <option name="totallyTimeSpent" value="131498000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1480,8 +1535,8 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.49597424" sideWeight="0.50680786" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24673203" sideWeight="0.49319214" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29575163" sideWeight="0.7670197" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24673203" sideWeight="0.49319214" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29411766" sideWeight="0.7670197" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27941176" sideWeight="0.49628055" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1490,8 +1545,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39869282" sideWeight="0.49546143" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1575,7 +1630,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/tests/AssessmentTests.java</url>
-          <line>51</line>
+          <line>45</line>
           <properties />
           <option name="timeStamp" value="247" />
         </line-breakpoint>
@@ -1587,27 +1642,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/tests/AssessmentTests.java</url>
-          <line>33</line>
+          <line>27</line>
           <properties />
           <option name="timeStamp" value="268" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
-          <line>28</line>
-          <properties />
-          <option name="timeStamp" value="271" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
-          <line>49</line>
+          <line>41</line>
           <properties />
           <option name="timeStamp" value="272" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
-          <line>29</line>
-          <properties />
-          <option name="timeStamp" value="273" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Main.java</url>
@@ -1617,37 +1660,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
-          <line>69</line>
+          <line>61</line>
           <properties />
           <option name="timeStamp" value="278" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
-          <line>66</line>
-          <properties />
-          <option name="timeStamp" value="279" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/states/ValidState.java</url>
-          <line>38</line>
-          <properties />
-          <option name="timeStamp" value="280" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/states/ValidState.java</url>
-          <line>47</line>
-          <properties />
-          <option name="timeStamp" value="283" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/states/ValidState.java</url>
-          <line>43</line>
-          <properties />
-          <option name="timeStamp" value="286" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/states/State.java</url>
-          <line>97</line>
+          <line>100</line>
           <properties />
           <option name="timeStamp" value="287" />
         </line-breakpoint>
@@ -1657,8 +1676,32 @@
           <properties />
           <option name="timeStamp" value="289" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
+          <line>35</line>
+          <properties />
+          <option name="timeStamp" value="298" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
+          <line>28</line>
+          <properties />
+          <option name="timeStamp" value="303" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="304" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/model/states/State.java</url>
+          <line>102</line>
+          <properties />
+          <option name="timeStamp" value="305" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="298" />
+      <option name="time" value="306" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
@@ -1766,13 +1809,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/repository/OptionalPackages.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1954,24 +1990,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/states/ValidState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Machine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="87">
@@ -1991,27 +2009,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/util/Setup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
+        <state relative-caret-position="782">
           <caret line="65" column="38" selection-start-line="65" selection-start-column="38" selection-end-line="65" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/repository/OptionalPackages.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/states/State.java">
+    <entry file="file://$PROJECT_DIR$/src/model/states/ValidState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="33" column="89" selection-start-line="33" selection-start-column="89" selection-end-line="33" selection-end-column="89" />
+        <state relative-caret-position="124">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Machine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/AssessmentTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+        <state relative-caret-position="1530">
+          <caret line="96" column="50" selection-start-line="96" selection-start-column="50" selection-end-line="96" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/states/State.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="271" column="0" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

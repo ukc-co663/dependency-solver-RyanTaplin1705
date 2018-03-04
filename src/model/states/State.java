@@ -31,26 +31,29 @@ public class State {
         this.history = history;
     }
 
-    public LinkedList<State> removePackage(Package p, PackageRepository packageRepository) throws Exception {
-        LinkedList<State> results = new LinkedList<>();
+    public LinkedList<ValidState> removePackage(Package p, PackageRepository packageRepository) throws Exception {
+        LinkedList<ValidState> results = new LinkedList<>();
         LinkedList<OptionalPackages> deps = getDeps(p);
         if (!deps.isEmpty()) {
             while(!deps.isEmpty()) {
                 OptionalPackages op = deps.pollLast();
                 for (Package pk : op.packages) {
                     if (results.isEmpty()) {
-                        results.add(this.clone().deletePackage(pk));
+                        if (this.clone().deletePackage(pk) instanceof Valid) results.add((ValidState)this.clone().deletePackage(pk));
                     } else {
-                        LinkedList<State> tr = new LinkedList<>();
+                        LinkedList<ValidState> tr = new LinkedList<>();
                         for (int i = 0; i < results.size(); i++) {
-                            tr.add(results.get(i).clone().deletePackage(pk));
+                            if (this.clone().deletePackage(pk) instanceof Valid) tr.add((ValidState)this.clone().deletePackage(pk));
                         }
                         results = tr;
                     }
                 }
             }
             for (State state : results) state.deletePackage(p);
-        } else results.add(this.clone().deletePackage(p));
+        } else {
+            if (this.clone().deletePackage(p) instanceof Valid)
+                results.add((ValidState)this.clone().deletePackage(p));
+        }
         return results;
     }
 
@@ -88,7 +91,7 @@ public class State {
         //if package exists in priortyQ then it is needed by a constraint.
         if (violatesConstraint(p)) return new InvalidState(this.packages, this.history, this.priorityQ);
 
-        if (!isInstalled(p)) return this;
+        if (!isInstalled(p)) return this.cloneValid();
         LinkedList<Package> tp = new LinkedList<>(this.packages);
         for (int i = 0; i < tp.size(); i++) {
             if (tp.get(i).name.equals(p.name) && tp.get(i).version.equals(p.version)) {
@@ -97,7 +100,7 @@ public class State {
                 return new ValidState(tp, this.history, this.priorityQ);
             }
         }
-        throw new Exception("The package you want to uninstall wasn't found.");
+        return this;
     }
 
     // note priorityQ... when I add anything I should add it to the priorityQ for this state
@@ -124,9 +127,8 @@ public class State {
         }
     }
 
-    public LinkedList<State> addPackage(Package p, PackageRepository packageRepository) throws Exception {
-        LinkedList<State> results = new LinkedList<>();
-
+    public LinkedList<ValidState> addPackage(Package p, PackageRepository packageRepository) throws Exception {
+        LinkedList<ValidState> results = new LinkedList<>();
         for (OptionalPackages d : p.dependants) {
             //A -> B or C
             if (results.isEmpty()) {
@@ -134,7 +136,7 @@ public class State {
                     results.addAll(this.clone().addPackage(p2, packageRepository));
                 }
             } else {
-                LinkedList<State> tr = new LinkedList<>();
+                LinkedList<ValidState> tr = new LinkedList<>();
                 for (int i = 0; i < results.size(); i++) {
                     for (Package p2 : d.packages) {
                         tr.addAll(results.get(i).clone().addPackage(p2, packageRepository));
@@ -146,16 +148,17 @@ public class State {
 
 
         if (results.isEmpty()) {
-            LinkedList<State> clones = this.clone().removeConflicts(p, packageRepository);
-            for (State cs : clones) {
+            LinkedList<ValidState> clones = this.clone().removeConflicts(p, packageRepository);
+            for (ValidState cs : clones) {
                 cs.addUpdate(p);
             }
             results = clones;
         } else {
-            LinkedList<State> re = new LinkedList<>();
+            LinkedList<ValidState> re = new LinkedList<>();
             for (State s : results) {
                 for (State cs : s.removeConflicts(p, packageRepository)) {
-                    re.add(cs.addUpdate(p));
+                    State state = cs.addUpdate(p);
+                    if (state instanceof  Valid) re.add((ValidState)state);
                 }
             }
             results = re;
@@ -163,8 +166,8 @@ public class State {
         return results;
     }
 
-    private LinkedList<State> removeConflicts(Package p, PackageRepository packageRepository) throws Exception {
-        LinkedList<State> results = new LinkedList<>();
+    private LinkedList<ValidState> removeConflicts(Package p, PackageRepository packageRepository) throws Exception {
+        LinkedList<ValidState> results = new LinkedList<>();
         for(ConflictPackages cps : p.conflicts) {
             for(Package pk : cps.packages) {
                 if (isInstalled(pk)) {
@@ -173,7 +176,7 @@ public class State {
                     if (cd.isEmpty()) {
                         if (results.isEmpty()) results.addAll(this.clone().removePackage(pk, packageRepository));
                         else {
-                            LinkedList<State> ts = new LinkedList<>();
+                            LinkedList<ValidState> ts = new LinkedList<>();
                             for (State s : results) {
                                 ts.addAll(s.removePackage(pk, packageRepository));
                             }
@@ -184,7 +187,7 @@ public class State {
                             State s = this.clone().satisfyPackageRemove(pk, cd);
                             results.addAll(s.removePackage(pk, packageRepository));
                         } else {
-                            LinkedList<State> ts = new LinkedList<>();
+                            LinkedList<ValidState> ts = new LinkedList<>();
                             for (State s : results) {
                                 State state = s.satisfyPackageRemove(pk, cd);
                                 ts.addAll(state.removePackage(pk, packageRepository));
@@ -196,11 +199,11 @@ public class State {
                 }
             }
         }
-        if (results.isEmpty()) results.add(this);
+        if (results.isEmpty()) results.add(this.cloneValid());
         return results;
     }
 
-    private State addUpdate(Package p) throws Exception {
+    public State addUpdate(Package p) throws Exception {
         if (isInstalled(p)) return new ValidState(this.packages, this.history, this.priorityQ);
 
         boolean validate = validate(p);
@@ -270,6 +273,14 @@ public class State {
                 new LinkedList<>(this.packages),
                 new LinkedList<>(this.history),
                 new LinkedList<>(this.priorityQ));
+    }
+
+    public ValidState cloneValid() throws Exception {
+        return new ValidState(
+                new LinkedList<>(this.packages),
+                new LinkedList<>(this.history),
+                new LinkedList<>(this.priorityQ));
+
     }
 
     public boolean isValid() {
