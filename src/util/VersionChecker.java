@@ -12,9 +12,9 @@ public class VersionChecker {
         int itLength = Math.min(leftS.length, rightS.length);
         for (int i = 0; i < itLength; i++) {
             if (operation.equals(Operation.LESS_THAN) || operation.equals(Operation.GREATER_THAN)) {
-                if (i == (itLength - 1)) {
-                    return operation.evaluate(Integer.parseInt(rightS[i]), Integer.parseInt(leftS[i]));
-                } else if (!Operation.EQUAL_TO.evaluate(Integer.parseInt(rightS[i]), Integer.parseInt(leftS[i]))) return false;
+                if (i == itLength - 1) return operation.evaluate(Integer.parseInt(rightS[i]), Integer.parseInt(leftS[i]));
+                else if (operation.evaluate(Integer.parseInt(rightS[i]), Integer.parseInt(leftS[i]))) return true;
+                else if (!Operation.EQUAL_TO.evaluate(Integer.parseInt(rightS[i]), Integer.parseInt(leftS[i]))) return false;
             } else if (!operation.evaluate(Integer.parseInt(rightS[i]), Integer.parseInt(leftS[i]))) return false;
         }
         return true;

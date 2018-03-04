@@ -50,7 +50,7 @@ public class State {
                 }
             }
             for (State state : results) state.deletePackage(p);
-        } else results.add(this);
+        } else results.add(this.clone().deletePackage(p));
         return results;
     }
 
@@ -89,12 +89,12 @@ public class State {
         if (violatesConstraint(p)) return new InvalidState(this.packages, this.history, this.priorityQ);
 
         if (!isInstalled(p)) return this;
-        for (int i = 0; i < this.packages.size(); i++) {
-            Package pp = this.packages.get(i);
-            if (pp.name.equals(p.name)) {
-                packages.remove(i);
-                history.add(new RemoveInstruction(pp.name, pp.version));
-                return new ValidState(this.packages, this.history, this.priorityQ);
+        LinkedList<Package> tp = new LinkedList<>(this.packages);
+        for (int i = 0; i < tp.size(); i++) {
+            if (tp.get(i).name.equals(p.name) && tp.get(i).version.equals(p.version)) {
+                tp.remove(i);
+                history.add(new RemoveInstruction(p.name, p.version));
+                return new ValidState(tp, this.history, this.priorityQ);
             }
         }
         throw new Exception("The package you want to uninstall wasn't found.");
@@ -126,22 +126,9 @@ public class State {
 
     public LinkedList<State> addPackage(Package p, PackageRepository packageRepository) throws Exception {
         LinkedList<State> results = new LinkedList<>();
-//        LinkedList<OptionalPackages> deps = getDeps(p);
-//        while(!deps.isEmpty()) {
-//            OptionalPackages op = deps.pollLast();
-//            for (Package pk : op.packages) {
-//                if (results.isEmpty()) {
-//                    results.add(this.clone().addUpdate(pk));
-//                } else {
-//                    LinkedList<State> tr = new LinkedList<>();
-//                    for (int i = 0; i < results.size(); i++) {
-//                        tr.add(results.get(i).clone().addUpdate(pk));
-//                    }
-//                    results = tr;
-//                }
-//            }
-//        }
+
         for (OptionalPackages d : p.dependants) {
+            //A -> B or C
             if (results.isEmpty()) {
                 for (Package p2 : d.packages) {
                     results.addAll(this.clone().addPackage(p2, packageRepository));
@@ -157,29 +144,59 @@ public class State {
             }
         }
 
-        for (State s : results) {
-            for(ConflictPackages cps : p.conflicts) {
-                for(Package pk : cps.packages) {
-                    if (isInstalled(pk)) {
-                        //are dependent on it.
-                        List<Package> cd = getDependents(pk); //todo
-                        if (cd.isEmpty()) {
-                            s.removePackage(pk, packageRepository);
-                        } else if (canUninstall(cd)) {
-                            s = satisfyPackageRemove(pk, cd);
-                            s.removePackage(pk, packageRepository);
-                        } // otherwise do nothing or return InvalidState.
-                    }
+
+        if (results.isEmpty()) {
+            LinkedList<State> clones = this.clone().removeConflicts(p, packageRepository);
+            for (State cs : clones) {
+                cs.addUpdate(p);
+            }
+            results = clones;
+        } else {
+            LinkedList<State> re = new LinkedList<>();
+            for (State s : results) {
+                for (State cs : s.removeConflicts(p, packageRepository)) {
+                    re.add(cs.addUpdate(p));
+                }
+            }
+            results = re;
+        }
+        return results;
+    }
+
+    private LinkedList<State> removeConflicts(Package p, PackageRepository packageRepository) throws Exception {
+        LinkedList<State> results = new LinkedList<>();
+        for(ConflictPackages cps : p.conflicts) {
+            for(Package pk : cps.packages) {
+                if (isInstalled(pk)) {
+                    //are dependent on it.
+                    List<Package> cd = getDependents(pk);
+                    if (cd.isEmpty()) {
+                        if (results.isEmpty()) results.addAll(this.clone().removePackage(pk, packageRepository));
+                        else {
+                            LinkedList<State> ts = new LinkedList<>();
+                            for (State s : results) {
+                                ts.addAll(s.removePackage(pk, packageRepository));
+                            }
+                            results = ts;
+                        }
+                    } else if (canUninstall(cd)) {
+                        if (results.isEmpty()) {
+                            State s = this.clone().satisfyPackageRemove(pk, cd);
+                            results.addAll(s.removePackage(pk, packageRepository));
+                        } else {
+                            LinkedList<State> ts = new LinkedList<>();
+                            for (State s : results) {
+                                State state = s.satisfyPackageRemove(pk, cd);
+                                ts.addAll(state.removePackage(pk, packageRepository));
+                            }
+                            results = ts;
+                        }
+
+                    } // otherwise do nothing or return InvalidState.
                 }
             }
         }
-
-        if (results.isEmpty()) {
-            State clone = this.clone().addUpdate(p);
-            results.add(clone);
-        } else for (State s : results) {
-            s.addUpdate(p);
-        }
+        if (results.isEmpty()) results.add(this);
         return results;
     }
 
