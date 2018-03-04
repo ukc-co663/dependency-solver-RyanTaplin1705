@@ -1,6 +1,8 @@
 package util;
 
 import model.constraints.*;
+import model.instructions.Instruction;
+import model.instructions.RemoveInstruction;
 import model.states.State;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,7 +57,17 @@ public class Setup {
     }
 
     public static State createState(String filepath, PackageRepository repository, List<ForbiddenConstraint> forbiddens) throws Exception {
-        return new State(readInitial(filepath, repository, forbiddens));
+        return new State(readInitial(filepath, repository, forbiddens), uninstalled(forbiddens), new LinkedList<>());
+    }
+
+    private static LinkedList<Instruction> uninstalled(List<ForbiddenConstraint> forbiddens) {
+        LinkedList<Instruction> res = new LinkedList<>();
+        for (ForbiddenConstraint fc : forbiddens) {
+            for (Package p : fc.packages) {
+                res.add(new RemoveInstruction(p.name, p.version));
+            }
+        }
+        return res;
     }
 
     private static LinkedList<Package> readInitial(String filePath, PackageRepository repository, List<ForbiddenConstraint> forbiddens) throws Exception {
