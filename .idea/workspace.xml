@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ceeaebcc-cbdd-4ee1-9cc5-c237ff62c6c7" name="Default" comment="Changes to fix solution pool returning no states. Now runs into stack overflow seen-9.">
+    <list default="true" id="ceeaebcc-cbdd-4ee1-9cc5-c237ff62c6c7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Machine.java" afterPath="$PROJECT_DIR$/src/model/Machine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/states/State.java" afterPath="$PROJECT_DIR$/src/model/states/State.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/repository/OptionalPackages.java" afterPath="$PROJECT_DIR$/src/repository/OptionalPackages.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/AssessmentTests.java" afterPath="$PROJECT_DIR$/tests/AssessmentTests.java" />
     </list>
     <ignored path="dependency-solver-RyanTaplin1705.iws" />
@@ -29,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AssessmentTests.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AssessmentTests.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/AssessmentTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1530">
-              <caret line="96" column="50" selection-start-line="96" selection-start-column="50" selection-end-line="96" selection-end-column="50" />
+            <state relative-caret-position="602">
+              <caret line="111" column="49" selection-start-line="111" selection-start-column="49" selection-end-line="111" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -44,8 +42,8 @@
       <file leaf-file-name="Machine.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/Machine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state relative-caret-position="104">
+              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -63,7 +61,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="State.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="State.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/states/State.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
@@ -159,10 +157,10 @@
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/tests/util/CoreTestCase.java" />
         <option value="$PROJECT_DIR$/src/util/Setup.java" />
-        <option value="$PROJECT_DIR$/tests/AssessmentTests.java" />
-        <option value="$PROJECT_DIR$/src/model/Machine.java" />
         <option value="$PROJECT_DIR$/src/repository/OptionalPackages.java" />
         <option value="$PROJECT_DIR$/src/model/states/State.java" />
+        <option value="$PROJECT_DIR$/src/model/Machine.java" />
+        <option value="$PROJECT_DIR$/tests/AssessmentTests.java" />
       </list>
     </option>
   </component>
@@ -1177,9 +1175,9 @@
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="JUnit.AssessmentTests" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testFive" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testZero" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testNine" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testNine" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testFive" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testZero" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.AssessmentTests.testTwo" />
       </list>
     </recent_temporary>
@@ -1216,7 +1214,7 @@
       <workItem from="1520009614465" duration="11704000" />
       <workItem from="1520162333162" duration="2097000" />
       <workItem from="1520179904709" duration="66000" />
-      <workItem from="1520180014644" duration="1297000" />
+      <workItem from="1520180014644" duration="2278000" />
     </task>
     <task id="LOCAL-00001" summary="Clean up from previous clone, started to do some further work on data structure.">
       <created>1517670027131</created>
@@ -1477,43 +1475,50 @@
       <option name="project" value="LOCAL" />
       <updated>1520164430242</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Fixed some tests.">
+      <created>1520181332013</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1520181332013</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="AssessmentTests - 2018.03.04 at 16h 31m 05s.xml">
-      <configuration name="AssessmentTests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="AssessmentTests - 2018.03.04 at 16h 32m 08s.xml">
-      <configuration name="AssessmentTests" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="AssessmentTests - 2018.03.04 at 16h 33m 42s.xml">
       <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 16h 31m 52s.xml">
-      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
+    <history-entry file="AssessmentTests - 2018.03.04 at 16h 45m 14s.xml">
+      <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 16h 32m 08s.xml">
-      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
+    <history-entry file="AssessmentTests - 2018.03.04 at 16h 50m 34s.xml">
+      <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 16h 33m 03s.xml">
-      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
+    <history-entry file="AssessmentTests - 2018.03.04 at 16h 51m 25s.xml">
+      <configuration name="AssessmentTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testFive - 2018.03.04 at 16h 33m 08s.xml">
-      <configuration name="AssessmentTests.testFive" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 36m 15s.xml">
+      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testZero - 2018.03.04 at 16h 21m 20s.xml">
-      <configuration name="AssessmentTests.testZero" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 41m 39s.xml">
+      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testZero - 2018.03.04 at 16h 29m 38s.xml">
-      <configuration name="AssessmentTests.testZero" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 42m 08s.xml">
+      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="AssessmentTests_testZero - 2018.03.04 at 16h 30m 42s.xml">
-      <configuration name="AssessmentTests.testZero" configurationId="JUnit" />
+    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 42m 47s.xml">
+      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 44m 03s.xml">
+      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AssessmentTests_testNine - 2018.03.04 at 16h 44m 26s.xml">
+      <configuration name="AssessmentTests.testNine" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131498000" />
+    <option name="totallyTimeSpent" value="132479000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1585,7 +1590,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="moved the solve.sh to basse" />
     <MESSAGE value="fix solve file extension" />
     <MESSAGE value="Debug arg[0] in script." />
     <MESSAGE value="Fix for substring index exception." />
@@ -1610,7 +1614,8 @@
     <MESSAGE value="Changes to fix solution pool returning no states. Now runs into stack overflow seen-9." />
     <MESSAGE value="Fixed recursive StackOverflow issue for .addPackage() method. Fixes seen-1, 3 and 6." />
     <MESSAGE value="Changes to recursive .removePackage() method to prevent StackOverFlow. Fixes seen-9. All seen tests now passing." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes to recursive .removePackage() method to prevent StackOverFlow. Fixes seen-9. All seen tests now passing." />
+    <MESSAGE value="Fixed some tests." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed some tests." />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -1630,7 +1635,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/tests/AssessmentTests.java</url>
-          <line>45</line>
+          <line>49</line>
           <properties />
           <option name="timeStamp" value="247" />
         </line-breakpoint>
@@ -1642,13 +1647,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/tests/AssessmentTests.java</url>
-          <line>27</line>
+          <line>29</line>
           <properties />
           <option name="timeStamp" value="268" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
-          <line>41</line>
+          <line>45</line>
           <properties />
           <option name="timeStamp" value="272" />
         </line-breakpoint>
@@ -1660,7 +1665,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/Machine.java</url>
-          <line>61</line>
+          <line>65</line>
           <properties />
           <option name="timeStamp" value="278" />
         </line-breakpoint>
@@ -1700,8 +1705,14 @@
           <properties />
           <option name="timeStamp" value="305" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/tests/AssessmentTests.java</url>
+          <line>100</line>
+          <properties />
+          <option name="timeStamp" value="306" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="306" />
+      <option name="time" value="316" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
@@ -2033,10 +2044,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/states/State.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="271" column="0" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Machine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+        <state relative-caret-position="104">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2045,19 +2064,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/AssessmentTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="96" column="50" selection-start-line="96" selection-start-column="50" selection-end-line="96" selection-end-column="50" />
+        <state relative-caret-position="602">
+          <caret line="111" column="49" selection-start-line="111" selection-start-column="49" selection-end-line="111" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/states/State.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="271" column="0" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
